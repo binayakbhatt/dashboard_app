@@ -22,8 +22,9 @@ return new class extends Migration
             $table->string('password');
             $table->bigInteger('employee_id');
             $table->string('designation');
-            $table->foreignId('role_id')->nullable(); //adding ->constrained() gives foreign key constraint is incorrectly formed error
-            $table->foreignId('office_id')->nullable();
+            $table->boolean('is_active')->default(false);
+            $table->foreignId('role_id')->nullable()->constrained(); 
+            $table->foreignId('office_id')->nullable()->constrained();
             $table->rememberToken();
             $table->timestamps();
         });
