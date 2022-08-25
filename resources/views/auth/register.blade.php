@@ -37,7 +37,17 @@
             </div>
 
             <!-- Office-->
-            <!--add component for office dropdown -->
+            <div class="mt-4">
+                <x-label for="office_id" :value="__('Office')" />
+
+                <x-input-select id="office_id"
+                    class="block mt-1 w-full"
+                    name="office_id" required>
+                    @foreach ($offices as $office)
+                        <option value="{{ $office->id }}">{{ $office->name }}</option>
+                    @endforeach
+                </x-input-select>
+            </div>
 
             <!-- Email Address -->
             <div class="mt-4">

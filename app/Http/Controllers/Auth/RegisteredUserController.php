@@ -20,7 +20,10 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return view('auth.register');
+        // Get all offices
+        $offices = \App\Models\Office::all();
+
+        return view('auth.register', compact('offices'));
     }
 
     /**
