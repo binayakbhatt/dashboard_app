@@ -46,7 +46,7 @@ class RegisteredUserController extends Controller
         ]);
 
         // Get role id for Guest
-        $role = \App\Models\Role::where('name', 'Guest')->first();
+       $role = \App\Models\Role::where('name', 'Guest')->first();
 
         $user = User::create([
             'name' => $request->name,
@@ -55,6 +55,7 @@ class RegisteredUserController extends Controller
             'employee_id' => $request->employee_id,
             'designation' => $request->designation,
             'office_id' => $request->office_id,
+            'is_active'=>false,
             'role_id' => $role->id,
         ]);
 
