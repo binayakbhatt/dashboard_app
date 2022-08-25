@@ -40,12 +40,22 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'employee_id' => ['required', 'integer', 'unique:users'],
+            'designation' => ['required', 'string', 'max:255'],
+            'office_id' => ['required', 'exists:offices,id'],
         ]);
+
+        // Get role id for Guest
+        $role = \App\Models\Role::where('name', 'Guest')->first();
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'employee_id' => $request->employee_id,
+            'designation' => $request->designation,
+            'office_id' => $request->office_id,
+            'role_id' => $role->id,
         ]);
 
         event(new Registered($user));
