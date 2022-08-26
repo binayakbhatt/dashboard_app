@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('offices', function (Blueprint $table) {
+        Schema::create('office_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('facility_id');
-            $table->foreignId('office_type_id')->constrained();
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('offices');
+        Schema::dropIfExists('office_types');
     }
 };

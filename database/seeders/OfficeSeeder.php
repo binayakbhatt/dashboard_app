@@ -17,14 +17,14 @@ class OfficeSeeder extends Seeder
         // Define offices array
         $offices = [
             [
-                'name' => 'Head Office',
+                'name' => 'NSH',
                 'facility_id' => 101,
-                'type' => 'Head Office',
+                'office_type_id' => 1,
             ],
             [
-                'name' => 'Branch Office',
+                'name' => 'ICH',
                 'facility_id' => 102,
-                'type' => 'Branch Office',
+                'office_type_id' => 2,
             ],
         ];
 

@@ -15,11 +15,15 @@ class Office extends Model
     protected $fillable = [
         'name',
         'facility_id',
-        'type',
+        'office_type_id',
     ];
 
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+    
+    public function officeType(){
+        return $this->belongsTo(OfficeType::class);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Office;
+use App\Models\OfficeType;
 use Illuminate\Http\Request;
 
 class OfficeController extends Controller
@@ -58,8 +59,11 @@ class OfficeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Office $office)
-    {
-        //
+    {   
+        // Get OfficeTypes
+        $officeTypes = OfficeType::all();
+        // Return admin offices edit view
+        return view('admin.offices.edit', compact('office', 'officeTypes'));
     }
 
     /**
@@ -71,7 +75,15 @@ class OfficeController extends Controller
      */
     public function update(Request $request, Office $office)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'facility_id' => 'required|string|max:255',
+            'office_type_id' => 'required|exists:office_types,id',
+        ]);
+
+        $office->update($validated);
+
+        return redirect()->route('admin.offices.index')->with('success', 'Office updated successfully');
     }
 
     /**

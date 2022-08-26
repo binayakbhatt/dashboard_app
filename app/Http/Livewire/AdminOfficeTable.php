@@ -51,7 +51,7 @@ final class AdminOfficeTable extends PowerGridComponent
     */
     public function datasource(): Builder
     {
-        return Office::query();
+        return Office::query()->with('officeType');
     }
 
     /*
@@ -86,6 +86,7 @@ final class AdminOfficeTable extends PowerGridComponent
             ->addColumn('facility_id')
             ->addColumn('name')
             ->addColumn('type')
+            ->addColumn('officeType.name')
             ->addColumn('created_at')
             ->addColumn('created_at_formatted', fn (Office $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
     }
@@ -116,9 +117,7 @@ final class AdminOfficeTable extends PowerGridComponent
                 ->makeInputText('name')
                 ->sortable(),
 
-            Column::make('Type', 'type')
-                ->searchable()
-                ->sortable(),
+            Column::make('Type', 'officeType.name'),
 
             Column::make('Created at', 'created_at_formatted', 'created_at')
                 ->makeInputDatePicker()
