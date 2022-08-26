@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
         \App\Models\User::factory(1)->create([
             'name' => 'Administrator',
             'email' => 'admin@test.com',
-            'employee_id' => 'ADMIN',
+            'employee_id' => 00010,
             'designation' => 'Administrator',
             'is_active' => True,
             'role_id' => 1,
