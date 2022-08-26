@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 // Routes group for auth middleware
@@ -25,15 +25,11 @@ Route::group(['middleware' => ['auth']], function () {
     })->name('dashboard');
 
     // Routes group for admin
-    Route::group(['middleware' => ['role:admin']], function () {
-
-        // Resource routes group for admin
-        Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
-            Route::resource('offices', App\Http\Controllers\Admin\OfficeController::class)->only(['index']);
-            // Route::resource('roles', App\Http\Controllers\Admin\RoleController::class);
-            // Route::resource('sets', App\Http\Controllers\Admin\SetController::class);
-            // Route::resource('users', App\Http\Controllers\Admin\UserController::class);
-        });
+    Route::group(['middleware' => ['role:admin'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+        Route::resource('offices', App\Http\Controllers\Admin\OfficeController::class)->only(['index']);
+        // Route::resource('roles', App\Http\Controllers\Admin\RoleController::class);
+        // Route::resource('sets', App\Http\Controllers\Admin\SetController::class);
+        // Route::resource('users', App\Http\Controllers\Admin\UserController::class);
     });
 });
 
