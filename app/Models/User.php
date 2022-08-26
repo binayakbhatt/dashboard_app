@@ -48,13 +48,22 @@ class User extends Authenticatable
         'is_active' => 'boolean',
     ];
 
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
-
     public function office()
     {
         return $this->belongsTo(Office::class);
+    }
+
+    // Role relationships
+    public function isAdmin(){
+        return $this->role->name === 'Administrator';
+    }
+
+    public function hasRole($role){
+        return $this->role->name === $role;
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 }

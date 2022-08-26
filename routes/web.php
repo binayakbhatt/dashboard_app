@@ -18,20 +18,25 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Routes group for auth middleware
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
+    // Routes group for admin
+    Route::group(['middleware' => ['role:admin']], function () {
 
-
-Route::controller(AdminController::class)->group(function(){
-Route::get('/admin-dashboard','getUserList')->name('admin-dashboard');
-Route::post('/role','addRole')->name('role');
-Route::get('/admin-dashboard','viewRole')->name('admin-dashboard');
-Route::post('/set','addSet')->name('set');
-Route::get('/admin-dashboard','viewSet')->name('admin-dashboard');
-Route::post('/office','addOffice')->name('office');
-Route::get('/admin-dashboard','viewOffice')->name('admin-dashboard');
+        // Resource routes group for admin
+        Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+            Route::resource('offices', App\Http\Controllers\Admin\OfficeController::class)->only(['index']);
+            // Route::resource('roles', App\Http\Controllers\Admin\RoleController::class);
+            // Route::resource('sets', App\Http\Controllers\Admin\SetController::class);
+            // Route::resource('users', App\Http\Controllers\Admin\UserController::class);
+        });
+    });
 });
 
-require __DIR__.'/auth.php';
+
+
+require __DIR__ . '/auth.php';

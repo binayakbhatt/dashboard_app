@@ -13,20 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('abstracts', function (Blueprint $table) {
+        Schema::create('mos', function (Blueprint $table) {
             $table->id();
             $table->date('date');
             $table->foreignId('set_id')->constrained();
             $table->foreignId('office_id')->constrained();
             $table->integer('opening_balance')->nullable();
-            $table->integer('bag_received')->nullable();
-            $table->integer('bag_opened')->nullable();
-            $table->integer('bag_closed')->nullable();
-            $table->integer('bag_dispatched')->nullable();
-            $table->integer('bag_transferred')->nullable();
-            $table->integer('article_received')->nullable();
-            $table->integer('article_closed')->nullable();
-            $table->integer('article_pending')->nullable();
+            $table->integer('bags_received')->nullable();
+            $table->integer('bags_opened')->nullable();
+            $table->integer('bags_closed')->nullable();
+            $table->integer('bags_dispatched')->nullable();
+            $table->integer('bags_transferred')->nullable();
+            $table->integer('articles_received')->nullable();
+            $table->integer('articles_closed')->nullable();
+            $table->integer('articles_pending')->nullable();
             $table->integer('customs_examination')->nullable();
             $table->integer('customs_clearance')->nullable();
             $table->integer('customs_pending')->nullable();
