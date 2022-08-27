@@ -2,7 +2,7 @@
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                <img src="{{ url('/img/India_Post_Logo.png') }}" alt="India Post Logo" class="w-32">
             </a>
         </x-slot>
 
@@ -19,8 +19,8 @@
             <div>
                 <x-label for="email" :value="__('Email')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
-                    autofocus />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
+                    required autofocus />
             </div>
 
             <!-- Password -->
@@ -39,7 +39,14 @@
                         name="remember">
                     <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
                 </label>
+                <div class="flex items-center justify-end mb-4">
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
+                        {{ __('Register') }}
+                    </a>
+                </div>
             </div>
+
+
 
             <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))

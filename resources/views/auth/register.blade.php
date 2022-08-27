@@ -2,7 +2,7 @@
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                <img src="{{ url('/img/India_Post_Logo.png') }}" alt="India Post Logo" class="w-32">
             </a>
         </x-slot>
 
@@ -12,13 +12,13 @@
         <form method="POST" action="{{ route('register') }}">
 
             @csrf
-            <h3 class="text-center text-cyan-700 font-bold"> Register </h3>
+            <h3 class="text-center text-cyan-700 font-bold"> Registration </h3>
             <!-- Name -->
             <div class="mt-4">
                 <x-label for="name" :value="__('Name')" />
 
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
-                    autofocus />
+                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')"
+                    required autofocus />
             </div>
 
             <!-- Employee ID -->
