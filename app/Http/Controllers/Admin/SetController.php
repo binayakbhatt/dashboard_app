@@ -36,7 +36,7 @@ class SetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       
     }
 
     /**

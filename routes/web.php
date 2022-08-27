@@ -26,8 +26,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Routes group for admin
     Route::group(['middleware' => ['role:admin'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
-        Route::resource('offices', App\Http\Controllers\Admin\OfficeController::class)->only(['index', 'edit', 'update']);
-        // Route::resource('roles', App\Http\Controllers\Admin\RoleController::class);
+        Route::resource('offices', App\Http\Controllers\Admin\OfficeController::class)->only(['index', 'edit', 'update', 'store', 'create']);
+        //Route::resource('roles', App\Http\Controllers\Admin\RoleController::class)->only(['index']);
         // Route::resource('sets', App\Http\Controllers\Admin\SetController::class);
         // Route::resource('users', App\Http\Controllers\Admin\UserController::class);
     });

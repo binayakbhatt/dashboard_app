@@ -114,7 +114,6 @@ final class AdminOfficeTable extends PowerGridComponent
 
             Column::make('Name', 'name')
                 ->searchable()
-                ->makeInputText('name')
                 ->sortable(),
 
             Column::make('Type', 'officeType.name'),

@@ -27,7 +27,9 @@ class OfficeController extends Controller
      */
     public function create()
     {
-        //
+        $officeTypes = OfficeType::all();
+
+        return view('admin.offices.create', compact('officeTypes'));
     }
 
     /**
@@ -36,9 +38,20 @@ class OfficeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Office $office)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'facility_id' => 'required|string|max:255',
+            'office_type_id' => 'required|exists:office_types,id',
+        ]);
+        
+        $office->create($validated);
+
+        return redirect()->route('admin.offices.index')->with('success', 'Office added successfully');
+
+       
+
     }
 
     /**
@@ -64,6 +77,7 @@ class OfficeController extends Controller
         $officeTypes = OfficeType::all();
         // Return admin offices edit view
         return view('admin.offices.edit', compact('office', 'officeTypes'));
+
     }
 
     /**
