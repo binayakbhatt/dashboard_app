@@ -2,15 +2,14 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Office;
+use App\Models\Role;
 use Illuminate\Support\Carbon;
-use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridEloquent};
 
-final class AdminOfficeTable extends PowerGridComponent
+final class AdminRoleTable extends PowerGridComponent
 {
     use ActionButton;
 
@@ -26,7 +25,7 @@ final class AdminOfficeTable extends PowerGridComponent
         //$this->showCheckBox();
 
         return [
-           // Exportable::make('export')->striped()->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
+            //Exportable::make('export')->striped(),
             Header::make()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
@@ -45,11 +44,11 @@ final class AdminOfficeTable extends PowerGridComponent
     /**
     * PowerGrid datasource.
     *
-    * @return Builder<\App\Models\Office>
+    * @return Builder<\App\Models\Role>
     */
     public function datasource(): Builder
     {
-        return Office::query()->with('officeType');
+        return Role::query();
     }
 
     /*
@@ -81,12 +80,10 @@ final class AdminOfficeTable extends PowerGridComponent
     public function addColumns(): PowerGridEloquent
     {
         return PowerGrid::eloquent()
-            ->addColumn('facility_id')
+            ->addColumn('id')
             ->addColumn('name')
-            ->addColumn('type')
-            ->addColumn('officeType.name')
-            ->addColumn('created_at')
-            ->addColumn('created_at_formatted', fn (Office $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
+            ->addColumn('created_at_formatted', fn (Role $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
+            ->addColumn('updated_at_formatted', fn (Role $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
     }
 
     /*
@@ -106,20 +103,27 @@ final class AdminOfficeTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('Facility ID', 'facility_id')
+            Column::make('ID', 'id')->sortable(),
+
+            Column::make('NAME', 'name')
+                ->sortable()
+                ->searchable(),
+                //->makeInputText(),
+
+            Column::make('CREATED AT', 'created_at_formatted', 'created_at')
                 ->searchable()
-                ->sortable(),
-
-            Column::make('Name', 'name')
-                ->searchable()
-                ->sortable(),
-
-            Column::make('Type', 'officeType.name'),
-
-            Column::make('Created at', 'created_at_formatted', 'created_at')
+                ->sortable()
                 ->makeInputDatePicker()
-                ->hidden()
-        ];
+                ->hidden(),
+
+            Column::make('UPDATED AT', 'updated_at_formatted', 'updated_at')
+                ->searchable()
+                ->sortable()
+                ->makeInputDatePicker()
+                ->hidden(),
+
+        ]
+;
     }
 
     /*
@@ -131,25 +135,26 @@ final class AdminOfficeTable extends PowerGridComponent
     */
 
      /**
-     * PowerGrid Office Action Buttons.
+     * PowerGrid Role Action Buttons.
      *
      * @return array<int, Button>
      */
 
-
+    /*
     public function actions(): array
     {
        return [
            Button::make('edit', 'Edit')
-               ->class('text-indigo-600 hover:text-indigo-900 hover:underline')
-               ->route('admin.offices.edit', ['office' => 'id']),
+               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+               ->route('role.edit', ['role' => 'id']),
 
-        //    Button::make('destroy', 'Delete')
-        //        ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-        //        ->route('admin.offices.destroy', ['office' => 'id'])
-        //        ->method('delete')
+           Button::make('destroy', 'Delete')
+               ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+               ->route('role.destroy', ['role' => 'id'])
+               ->method('delete')
         ];
     }
+    */
 
     /*
     |--------------------------------------------------------------------------
@@ -160,7 +165,7 @@ final class AdminOfficeTable extends PowerGridComponent
     */
 
      /**
-     * PowerGrid Office Action Rules.
+     * PowerGrid Role Action Rules.
      *
      * @return array<int, RuleActions>
      */
@@ -172,7 +177,7 @@ final class AdminOfficeTable extends PowerGridComponent
 
            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($office) => $office->id === 1)
+                ->when(fn($role) => $role->id === 1)
                 ->hide(),
         ];
     }

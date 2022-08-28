@@ -106,8 +106,11 @@ class OfficeController extends Controller
      * @param  \App\Models\Office  $office
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Office $office)
+    public function destroy($id)
     {
-        //
+        //this gives refrential intregrity error 
+         $office = Office::findOrFail($id);
+         $office->delete();
+        return redirect()->route('admin.offices.index')->with('success', 'Office deleted successfully');
     }
 }

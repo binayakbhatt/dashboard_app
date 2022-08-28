@@ -25,7 +25,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        
+        return view('admin.roles.create');
     }
 
     /**
@@ -34,9 +34,14 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Role $role)
     {
-        //
+       $validated = $request->validate([
+            'name'=> 'required|string|max:255|unique:roles,name'
+        ]);
+
+        $role->create($validated);
+        return redirect()->route('admin.roles.index')->with('success',"Role added successfully");
     }
 
     /**
@@ -47,7 +52,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        //
+        
     }
 
     /**
