@@ -15,7 +15,7 @@ class SetController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.sets.index');
     }
 
     /**
@@ -25,7 +25,7 @@ class SetController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.sets.create');
     }
 
     /**
@@ -34,10 +34,16 @@ class SetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Set $set)
     {
-       
+       $validated = $request->validate([
+        'name'=>'required|string|max:255|unique:sets,name'
+       ]);
+
+        $set->create($validated);
+        return redirect()->route('admin.sets.index')->with('success',"Set added successfully");
     }
+    
 
     /**
      * Display the specified resource.
