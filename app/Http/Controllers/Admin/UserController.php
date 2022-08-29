@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.users.index');
     }
 
     /**
@@ -58,7 +58,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $roles = \App\Models\Role::all();
+        $offices = \App\Models\Office::all();
+        return view('admin.users.edit', compact('user', 'roles', 'offices'));
     }
 
     /**
@@ -70,7 +72,17 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'employee_id' => 'required|string|max:255|unique:users,employee_id,' . $user->id,
+            'designation' => 'required|string|max:255',
+            'role_id' => 'required|exists:roles,id',
+            'office_id' => 'required|exists:offices,id',
+        ]);
+
+        $user->update($validated);
+        return redirect()->route('admin.users.index')->with('success', 'User updated successfully');
     }
 
     /**

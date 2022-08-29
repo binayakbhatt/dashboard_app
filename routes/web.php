@@ -30,7 +30,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('roles', App\Http\Controllers\Admin\RoleController::class)->only(['index','create','store']);
         Route::resource('sets', App\Http\Controllers\Admin\SetController::class)->only(['index', 'store', 'create']);
         Route::resource('office_types', App\Http\Controllers\Admin\OfficeTypeController::class)->only(['index', 'store', 'create']);
-        // Route::resource('users', App\Http\Controllers\Admin\UserController::class);
+        Route::resource('users', App\Http\Controllers\Admin\UserController::class)->only(['index', 'edit', 'update']);
     });
 });
 
