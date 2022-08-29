@@ -15,13 +15,13 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.offices.index')" :active="request()->routeIs('admin.offices.index')">
+                    <x-nav-link :href="route('admin.offices.index')" :active="request()->routeIs('admin.offices.*')">
                         {{ __('Offices') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.index')">
+                    <x-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
                         {{ __('Roles') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.sets.index')" :active="request()->routeIs('admin.roles.index')">
+                    <x-nav-link :href="route('admin.sets.index')" :active="request()->routeIs('admin.sets.*')">
                         {{ __('Sets') }}
                     </x-nav-link>
                 </div>

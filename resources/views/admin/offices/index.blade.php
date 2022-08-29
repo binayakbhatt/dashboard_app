@@ -6,7 +6,7 @@
             </h2>
             <div
                 class="flex items-center justify-end text-cyan-500 background-transparent font-bold uppercase outline-none focus:outline-none ease-linear transition-all duration-150">
-                <x-nav-link :href="route('admin.offices.create')" :active="request()->routeIs('admin.offices.create')">
+                <x-nav-link :href="route('admin.offices.create')">
                     {{ __('Add Offices') }}
                 </x-nav-link>
             </div>
