@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('facility_id');
-            $table->foreignId('office_type_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('office_type_id')->constrained();
             $table->timestamps();
         });
     }
