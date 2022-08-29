@@ -15,15 +15,17 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.offices.index')" :active="request()->routeIs('admin.offices.*')">
-                        {{ __('Offices') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
-                        {{ __('Roles') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.sets.index')" :active="request()->routeIs('admin.sets.*')">
-                        {{ __('Sets') }}
-                    </x-nav-link>
+                    @if (Auth::user()->isAdmin())
+                        <x-nav-link :href="route('admin.offices.index')" :active="request()->routeIs('admin.offices.*')">
+                            {{ __('Offices') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
+                            {{ __('Roles') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.sets.index')" :active="request()->routeIs('admin.sets.*')">
+                            {{ __('Sets') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -83,6 +85,17 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @if (Auth::user()->isAdmin())
+                <x-responsive-nav-link :href="route('admin.offices.index')" :active="request()->routeIs('admin.offices.*')">
+                    {{ __('Offices') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
+                    {{ __('Roles') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.sets.index')" :active="request()->routeIs('admin.sets.*')">
+                    {{ __('Sets') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
@@ -96,7 +109,6 @@
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-
                     <x-responsive-nav-link :href="route('logout')"
                         onclick="event.preventDefault();
                                         this.closest('form').submit();">
