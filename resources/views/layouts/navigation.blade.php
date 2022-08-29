@@ -19,6 +19,9 @@
                         <x-nav-link :href="route('admin.offices.index')" :active="request()->routeIs('admin.offices.*')">
                             {{ __('Offices') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.office_types.index')" :active="request()->routeIs('admin.office_types.*')">
+                            {{ __('Off Types') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
                             {{ __('Roles') }}
                         </x-nav-link>
@@ -88,6 +91,9 @@
             @if (Auth::user()->isAdmin())
                 <x-responsive-nav-link :href="route('admin.offices.index')" :active="request()->routeIs('admin.offices.*')">
                     {{ __('Offices') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.office_types.index')" :active="request()->routeIs('admin.office_types.*')">
+                    {{ __('Off types') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
                     {{ __('Roles') }}
