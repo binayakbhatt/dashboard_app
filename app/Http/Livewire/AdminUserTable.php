@@ -101,6 +101,10 @@ final class AdminUserTable extends PowerGridComponent
             ->addColumn('role')
             ->addColumn('office')
             ->addColumn('designation')
+            ->addColumn('is_active')
+            ->addColumn('is_active_formated', function ($model) {
+                return $model->is_active ? 'Active' : 'Inactive';
+            })
             ->addColumn('created_at')
             ->addColumn('created_at_formatted', fn (User $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
     }
@@ -135,6 +139,9 @@ final class AdminUserTable extends PowerGridComponent
                 ->sortable(),
 
             Column::make('Office', 'office')
+                ->sortable(),
+            
+            Column::make('Is Active', 'is_active_formated', 'is_active')
                 ->sortable(),
         ];
     }

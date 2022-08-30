@@ -51,6 +51,13 @@
                                     @endforeach
                                 </x-input-select>
                             </div>
+                            <div>
+                                <x-label for="is_active" :value="__('Status')" />
+                                <x-input-select id="is_active" class="block mt-1 w-full" name="is_active" required>
+                                    <option value="1" {{ $user->is_active ? 'selected' : '' }}>Active</option>
+                                    <option value="0" {{ !$user->is_active ? 'selected' : '' }}>Inactive</option>
+                                </x-input-select>
+                            </div>
                         </div>
                         <div class="flex items-center justify-end mt-4 ">
                             <x-button class="ml-3" type="submit">

@@ -79,6 +79,7 @@ class UserController extends Controller
             'designation' => 'required|string|max:255',
             'role_id' => 'required|exists:roles,id',
             'office_id' => 'required|exists:offices,id',
+            'is_active' => 'required|boolean',
         ]);
 
         $user->update($validated);
