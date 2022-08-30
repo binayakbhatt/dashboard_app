@@ -51,7 +51,10 @@ final class MoTable extends PowerGridComponent
     */
     public function datasource(): Builder
     {
-        return Mo::query();
+        return Mo::query()
+        ->join('offices', 'offices.id', '=', 'mos.office_id')
+        ->join('sets', 'sets.id', '=', 'mos.set_id')
+        ->select('mos.*', 'offices.name as office_name', 'sets.name as set_name');
     }
 
     /*
@@ -69,7 +72,16 @@ final class MoTable extends PowerGridComponent
      */
     public function relationSearch(): array
     {
-        return [];
+        return [
+            'office_id' => [
+                'model' => Office::class,
+                'column' => 'name',
+            ],
+            'set_id' => [
+                'model' => Set::class,
+                'column' => 'name',
+            ],
+        ];
     }
 
     /*
@@ -83,8 +95,8 @@ final class MoTable extends PowerGridComponent
     public function addColumns(): PowerGridEloquent
     {
         return PowerGrid::eloquent()
-            ->addColumn('id')
-            ->addColumn('name')
+            ->addColumn('date')
+            ->addColumn('office_name')
             ->addColumn('created_at')
             ->addColumn('created_at_formatted', fn (Mo $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
     }
@@ -106,13 +118,7 @@ final class MoTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('ID', 'id')
-                ->searchable()
-                ->sortable(),
-
-            Column::make('Name', 'name')
-                ->searchable()
-                ->makeInputText('name')
+            Column::make('Office', 'office_name')
                 ->sortable(),
 
             Column::make('Created at', 'created_at')

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mo;
+use App\Models\Set;
+use App\Models\Office;
 use Illuminate\Http\Request;
 
 class MoController extends Controller
@@ -24,7 +26,15 @@ class MoController extends Controller
      */
     public function create()
     {
-        //
+        $sets = Set::all();
+        $offices = Office::all();
+        $int_fields = ['opening_balance', 'bags_received', 'bags_opened', 'bags_closed', 'bags_dispatched', 'bags_transferred', 'articles_received', 'articles_closed', 'articles_pending', 'customs_examination', 'customs_clearance', 'customs_pending', 'sa_WS', 'mts_WS', 'dwl_WS'];
+        $boolean_fields = [
+            'manpower' => 'Man Power as per Est norms achieved',
+            'logbook' => 'RTN/MMS logbook properly maintained',
+            'rtn' => 'RTN/MMS ontime arrival & departure',
+        ];
+        return view('mos.create', compact('sets', 'offices', 'int_fields', 'boolean_fields'));
     }
 
     /**
@@ -35,7 +45,7 @@ class MoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

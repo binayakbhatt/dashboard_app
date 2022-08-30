@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('date');
             $table->foreignId('set_id')->constrained();
             $table->foreignId('office_id')->constrained();
-            $table->integer('opening_balance')->nullable();
+            $table->integer('bags_opening_balance')->nullable();
             $table->integer('bags_received')->nullable();
             $table->integer('bags_opened')->nullable();
             $table->integer('bags_closed')->nullable();
@@ -33,9 +33,9 @@ return new class extends Migration
             $table->integer('sa_WS')->comment('SA working strength')->nullable();
             $table->integer('mts_WS')->comment('MTS working strength')->nullable();
             $table->integer('dwl_WS')->comment('DWL working strength')->nullable();
-            $table->string('manpower')->comment('Productivity of Man Power as per Est norms achieved')->nullable();
-            $table->string('logbook')->comment('RTN/MMS logbook properly maintained')->nullable();
-            $table->string('rtn')->comment('RTN/MMS ontime arrival & departure')->nullable();
+            $table->boolean('manpower')->comment('Productivity of Man Power as per Est norms achieved')->nullable();
+            $table->boolean('logbook')->comment('RTN/MMS logbook properly maintained')->nullable();
+            $table->boolean('rtn')->comment('RTN/MMS ontime arrival & departure')->nullable();
             $table->string('remarks', 100)->nullable();
             $table->timestamps();
         });
