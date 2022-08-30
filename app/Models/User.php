@@ -23,7 +23,6 @@ class User extends Authenticatable
         'password',
         'employee_id',
         'designation',
-        'is_active',
         'role_id',
         'office_id',
     ];
@@ -45,7 +44,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'is_active' => 'boolean',
     ];
 
     public function office()
