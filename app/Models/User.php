@@ -57,7 +57,8 @@ class User extends Authenticatable
     }
 
     public function hasRole($role){
-        return $this->role->name === $role;
+        // Check if user's role is in the list of roles
+        return in_array($this->role->name, $role);
     }
 
     public function role()

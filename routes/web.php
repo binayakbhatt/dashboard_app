@@ -32,6 +32,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('office_types', App\Http\Controllers\Admin\OfficeTypeController::class)->only(['index', 'store', 'create']);
         Route::resource('users', App\Http\Controllers\Admin\UserController::class)->only(['index', 'edit', 'update']);
     });
+
+    Route::group(['middleware' => ['role:Editor, Verified']], function(){
+        Route::resource('mos', App\Http\Controllers\MoController::class)->only(['index', 'store', 'create']);
+    });
 });
 
 
