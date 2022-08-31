@@ -28,7 +28,7 @@ class MoController extends Controller
     {
         $sets = Set::all();
         $offices = Office::all();
-        $int_fields = ['opening_balance', 'bags_received', 'bags_opened', 'bags_closed', 'bags_dispatched', 'bags_transferred', 'articles_received', 'articles_closed', 'articles_pending', 'customs_examination', 'customs_clearance', 'customs_pending', 'sa_WS', 'mts_WS', 'dwl_WS'];
+        $int_fields = ['bags_opening_balance', 'bags_received', 'bags_opened', 'bags_closed', 'bags_dispatched', 'bags_transferred', 'articles_received', 'articles_closed', 'articles_pending', 'customs_examination', 'customs_clearance', 'customs_pending', 'sa_WS', 'mts_WS', 'dwl_WS'];
         $boolean_fields = [
             'manpower' => 'Man Power as per Est norms achieved',
             'logbook' => 'RTN/MMS logbook properly maintained',

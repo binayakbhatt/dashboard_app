@@ -16,7 +16,7 @@ class Mo extends Model
         'date',
         'set_id',
         'office_id',
-        'opening_balance',
+        'bags_opening_balance',
         'bags_received',
         'bags_opened',
         'bags_closed',
