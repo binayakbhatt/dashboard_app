@@ -69,6 +69,7 @@
                             </x-button>
                         </div>
                     </form>
+                    <x-confirm-modal></x-confirm-modal>
                 </div>
             </div>
         </div>
