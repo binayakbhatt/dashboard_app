@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Mo;
+use App\Models\Office;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Builder;
@@ -23,7 +24,7 @@ final class MoTable extends PowerGridComponent
     */
     public function setUp(): array
     {
-        $this->showCheckBox();
+        // $this->showCheckBox();
 
         return [
             Exportable::make('export')
@@ -45,16 +46,24 @@ final class MoTable extends PowerGridComponent
     */
 
     /**
-    * PowerGrid datasource.
-    *
-    * @return Builder<\App\Models\Mo>
-    */
+     * PowerGrid datasource.
+     *
+     * @return Builder<\App\Models\Mo>
+     */
     public function datasource(): Builder
     {
-        return Mo::query()
-        ->join('offices', 'offices.id', '=', 'mos.office_id')
-        ->join('sets', 'sets.id', '=', 'mos.set_id')
-        ->select('mos.*', 'offices.name as office_name', 'sets.name as set_name');
+        $query =  Mo::query()
+            ->join('offices', 'offices.id', '=', 'mos.office_id')
+            ->join('sets', 'sets.id', '=', 'mos.set_id')
+            ->select('mos.*', 'offices.name as office_name', 'sets.name as set_name')
+            ->orderBy('mos.date', 'desc');
+
+        // Check if user is admin
+        if (!auth()->user()->isAdmin()) {
+            $query = $query->where('mos.office_id', auth()->user()->office_id);
+        }
+
+        return $query;
     }
 
     /*
@@ -95,8 +104,50 @@ final class MoTable extends PowerGridComponent
     public function addColumns(): PowerGridEloquent
     {
         return PowerGrid::eloquent()
-            ->addColumn('date')
             ->addColumn('office_name')
+            ->addColumn('date')
+            ->addColumn('date_formatted', function (Mo $model) {
+                return $model->date->format('d/m/y');
+            })
+            ->addColumn('set_name')
+
+            ->addColumn('bags_opening_balance')
+            ->addColumn('bags_received')
+            ->addColumn('bags_opened')
+            ->addColumn('bags_closed')
+            ->addColumn('bags_dispatched')
+            ->addColumn('bags_transferred')
+            ->addColumn('bags', function (Mo $model) {
+                return $model->bags_opening_balance . '/' . $model->bags_received . '/' . $model->bags_opened . '/' . $model->bags_closed . '/' . $model->bags_dispatched . '/' . $model->bags_transferred;
+            })
+
+            ->addColumn('articles_received')
+            ->addColumn('articles_closed')
+            ->addColumn('articles_pending')
+
+            ->addColumn('customs_examination')
+            ->addColumn('customs_clearance')
+            ->addColumn('customs_pending')
+
+            ->addColumn('sa_WS')
+            ->addColumn('mts_WS')
+            ->addColumn('dwl_WS')
+
+            ->addColumn('manpower')
+            ->addColumn('manpower_formatted', function (Mo $model) {
+                return $model->manpower ? 'Yes' : 'No';
+            })
+            ->addColumn('logbook')
+            ->addColumn('logbook_formatted', function (Mo $model) {
+                return $model->logbook ? 'Yes' : 'No';
+            })
+            ->addColumn('rtn')
+            ->addColumn('rtn_formatted', function (Mo $model) {
+                return $model->rtn ? 'Yes' : 'No';
+            })
+
+            ->addColumn('remarks')
+
             ->addColumn('created_at')
             ->addColumn('created_at_formatted', fn (Mo $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
     }
@@ -110,7 +161,7 @@ final class MoTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Columns.
      *
      * @return array<int, Column>
@@ -119,7 +170,41 @@ final class MoTable extends PowerGridComponent
     {
         return [
             Column::make('Office', 'office_name')
-                ->sortable(),
+                ->makeInputSelect(Office::query()->orderBy('name')->get(), 'name', 'office_id'),
+
+            Column::make('Date', 'date_formatted', 'date')
+                ->makeInputDatePicker()
+                ->searchable(),
+
+            Column::make('Set', 'set_name'),
+
+            Column::make('Bags Op_Bal', 'bags_opening_balance'),
+            Column::make('Bags Rec', 'bags_received'),
+            Column::make('Bags Op', 'bags_opened'),
+            Column::make('Bags Cl', 'bags_closed'),
+            Column::make('Bags Disp', 'bags_dispatched'),
+            // Column::make('Bags Rec/Op/Cl/Disp', 'bags')
+            // ->sortable(),
+            Column::make('Bags Tnf', 'bags_transferred'),
+
+            Column::make('Art Rec', 'articles_received'),
+            Column::make('Art Cl', 'articles_closed'),
+            Column::make('Art Pd', 'articles_pending'),
+
+            Column::make('Cust Exam', 'customs_examination'),
+            Column::make('Cust Clear', 'customs_clearance'),
+            Column::make('Cust Pd', 'customs_pending'),
+
+            Column::make('SA', 'sa_WS'),
+            Column::make('MTS', 'mts_WS'),
+            Column::make('DWL', 'dwl_WS'),
+
+            // Column::make('Manpower', 'manpower_formatted'),
+            // Column::make('Logbook', 'logbook_formatted'),
+            // Column::make('RTN', 'rtn_formatted'),
+
+            Column::make('Remarks', 'remarks'),
+
 
             Column::make('Created at', 'created_at')
                 ->hidden(),
@@ -127,6 +212,7 @@ final class MoTable extends PowerGridComponent
             Column::make('Created at', 'created_at_formatted', 'created_at')
                 ->makeInputDatePicker()
                 ->searchable()
+                ->hidden(),
         ];
     }
 
@@ -138,7 +224,7 @@ final class MoTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Mo Action Buttons.
      *
      * @return array<int, Button>
@@ -168,7 +254,7 @@ final class MoTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Mo Action Rules.
      *
      * @return array<int, RuleActions>

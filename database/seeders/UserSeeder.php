@@ -20,7 +20,6 @@ class UserSeeder extends Seeder
             'email' => 'admin@test.com',
             'employee_id' => 00010,
             'designation' => 'Administrator',
-            'is_active' => True,
             'role_id' => 1,
             'office_id' => 1,
         ]);

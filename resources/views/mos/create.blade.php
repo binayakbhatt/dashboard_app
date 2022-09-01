@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Add Roles') }}
+            {{ __('Add Data') }}
         </h2>
     </x-slot>
 
@@ -17,12 +17,16 @@
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
                             <div class="mt-4 col-span-2 md:col-span-1">
                                 <x-label for="office_id" :value="__('Office')" />
-                                <x-input-select id="office_id" class="block mt-1 w-full" name="office_id" required>
+                                <x-input-select id="office_id" class="block mt-1 w-full" name="office_id" disabled>
                                     <option value="" selected disabled>Select</option>
                                     @foreach ($offices as $office)
-                                        <option value="{{ $office->id }}">{{ $office->name }}</option>
+                                        <option value="{{ $office->id }}" {{ Auth::user()->office_id == $office->id ? 'selected' : '' }} >{{ $office->name }}</option>
                                     @endforeach
                                 </x-input-select>
+                            </div>
+                            <div class="mt-4 col-span-2 md:col-span-1">
+                                <x-label for="date" :value="__('Date')" />
+                                <x-input id="date" class="block mt-1 w-full" type="date" name="date" :value="old('date')" required autofocus />
                             </div>
                             <div class="mt-4 col-span-2 md:col-span-1">
                                 <x-label for="set_id" :value="__('Set')" />
@@ -52,7 +56,7 @@
                                     </x-input-select>
                                 </div>
                             @endforeach
-                            <div class="mt-4 col-span-2 md:col-span-1">
+                            <div class="mt-4 col-span-2 md:col-span-3">
                                 <x-label for="remarks" :value="__('Remarks')" />
                                 <x-input id="remarks" class="block mt-1 w-full" type="text" name="remarks"
                                     :value="old('remarks')" />

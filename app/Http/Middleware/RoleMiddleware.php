@@ -24,10 +24,8 @@ class RoleMiddleware
             return $next($request);
 
         // If user is not an admin, check if they have the required role
-        foreach ($roles as $role) {
-            if ($user->hasRole($role))
-                return $next($request);
-        }
+        if ($user->hasRole($roles))
+            return $next($request);
 
         // If user is not an admin and does not have the required role, redirect to 403 page
         return abort(403);
