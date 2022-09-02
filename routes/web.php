@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 
 // Routes group for auth middleware
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');

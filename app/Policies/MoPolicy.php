@@ -43,8 +43,8 @@ class MoPolicy
      */
     public function create(User $user)
     {
-        // User must be 'Editor' or 'Administrator'
-        if ($user->role->name === 'Editor' || $user->role->name === 'Administrator') {
+        // User must be 'Editor'
+        if ($user->role->name === 'Editor') {
             return true;
         }
         // Otherwise decline access

@@ -4,12 +4,14 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Mail Offices') }}
             </h2>
-            <div
-                class="flex items-center justify-end text-cyan-500 background-transparent font-bold uppercase outline-none focus:outline-none ease-linear transition-all duration-150">
-                <x-nav-link :href="route('mos.create')">
-                    {{ __('Add Data') }}
-                </x-nav-link>
-            </div>
+            @can('create', App\Models\Mo::class)
+                <div
+                    class="flex items-center justify-end text-cyan-500 background-transparent font-bold uppercase outline-none focus:outline-none ease-linear transition-all duration-150">
+                    <x-nav-link :href="route('mos.create')">
+                        {{ __('Add Data') }}
+                    </x-nav-link>
+                </div>
+            @endcan
         </span>
     </x-slot>
     <div class="py-12">

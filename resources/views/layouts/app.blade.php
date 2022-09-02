@@ -34,13 +34,14 @@
         <main>
             {{ $slot }}
         </main>
+        <footer class="bg-slate-300">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 font-serif text-center">
+                Disclaimer: This website is of internal use of Assam Circle. Only persons authorised by the Authority
+                shall
+                have access to this site
+            </div>
+        </footer>
     </div>
-    <footer class="bg-state-300">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 font-serif">
-            Disclaimer: This website is of internal use of Assam Circle. Only persons authorised by the Authority shall
-            have access to this site
-        </div>
-    </footer>
     <!-- Scripts -->
     @livewireScripts
     @powerGridScripts
