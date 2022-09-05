@@ -19,7 +19,7 @@ class MoPolicy
     public function viewAny(User $user)
     {
         // User's role must be 'Administrator' or 'Editor' or 'Verified'
-        return $user->hasRole(['Administrator', 'Editor', 'Verified']);
+        return $user->hasRoles(['Administrator', 'Editor', 'Verified']);
     }
 
     /**

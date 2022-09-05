@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('operator', 255);
             $table->date('date');
             $table->string('centre_type');
-            $table->int('enrolment');
-            $table->int('update');
+            $table->integer('enrolment');
+            $table->integer('update');
             $table->timestamps();
         });
     }

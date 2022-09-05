@@ -16,14 +16,11 @@ class SetSeeder extends Seeder
     {
         // Define sets array
         $sets = [
-            'GEN 1',
-            'GEN 2',
-            'GEN 3',
-            'GEN 4',
-            'GEN 5',
-            'GEN 6',
-            'GEN 7',
-            'GEN 8',
+            'Morning',
+            'Day',
+            'Evening',
+            'Night A',
+            'Night B',
         ];
 
         // Loop through sets array and create sets

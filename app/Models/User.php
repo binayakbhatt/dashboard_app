@@ -56,9 +56,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->role->name === 'Administrator';
     }
 
-    public function hasRole($role){
+    public function hasRoles($roles){
         // Check if user's role is in the list of roles
-        return in_array($this->role->name, $role);
+        return in_array($this->role->name, $roles);
     }
 
     public function role()

@@ -33,7 +33,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::resource('users', App\Http\Controllers\Admin\UserController::class)->only(['index', 'edit', 'update']);
     });
 
-    Route::group(['middleware' => ['role:Editor, Verified']], function(){
+    Route::group(['middleware' => ['role:Editor,Verified']], function(){
         Route::resource('mos', App\Http\Controllers\MoController::class)->only(['index', 'store', 'create']);
     });
 });

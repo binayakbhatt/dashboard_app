@@ -23,6 +23,9 @@ class OfficeTypeSeeder extends Seeder
             'PH',
             'BNPL',
             'TMO',
+            'SFPO',
+            'MBC',
+            'CO',
         ];
 
         // Loop through office types and create them

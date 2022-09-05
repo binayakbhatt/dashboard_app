@@ -20,13 +20,16 @@
                                 <x-input-select id="office_id" class="block mt-1 w-full" name="office_id" disabled>
                                     <option value="" selected disabled>Select</option>
                                     @foreach ($offices as $office)
-                                        <option value="{{ $office->id }}" {{ Auth::user()->office_id == $office->id ? 'selected' : '' }} >{{ $office->name }}</option>
+                                        <option value="{{ $office->id }}"
+                                            {{ Auth::user()->office_id == $office->id ? 'selected' : '' }}>
+                                            {{ $office->name }}</option>
                                     @endforeach
                                 </x-input-select>
                             </div>
                             <div class="mt-4 col-span-2 md:col-span-1">
                                 <x-label for="date" :value="__('Date')" />
-                                <x-input id="date" class="block mt-1 w-full" type="date" name="date" :value="old('date')" required autofocus />
+                                <x-input id="date" class="block mt-1 w-full" type="date" name="date"
+                                    :value="old('date')" required autofocus />
                             </div>
                             <div class="mt-4 col-span-2 md:col-span-1">
                                 <x-label for="set_id" :value="__('Set')" />
@@ -73,7 +76,9 @@
                             </x-button>
                         </div>
                     </form>
-                    <x-confirm-modal></x-confirm-modal>
+                    <x-confirm-modal>
+                        Please fill only those fields that are relavant to your office. Irrelevant fields may be left blank.
+                    </x-confirm-modal>
                 </div>
             </div>
         </div>

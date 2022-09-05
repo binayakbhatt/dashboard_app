@@ -24,9 +24,10 @@ class RoleMiddleware
             return $next($request);
 
         // If user is not an admin, check if they have the required role
-        if ($user->hasRole($roles))
+        if ($user->hasRoles($roles))
             return $next($request);
 
+        // dd($roles);
         // If user is not an admin and does not have the required role, redirect to 403 page
         return abort(403);
     }
