@@ -34,7 +34,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     });
 
     Route::group(['middleware' => ['role:Editor,Verified']], function(){
-        Route::resource('mos', App\Http\Controllers\MoController::class)->only(['index', 'store', 'create']);
+        Route::resource('mos', App\Http\Controllers\MoController::class)->only(['index', 'store', 'create', 'edit', 'update']);
     });
 });
 

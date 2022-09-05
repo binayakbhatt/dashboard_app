@@ -60,8 +60,10 @@ class MoPolicy
      */
     public function update(User $user, Mo $mo)
     {
-        // No updates are allowed
-        return false;
+        // User must be 'Editor' and own the model
+        if ($user->role->name === 'Editor' && $user->id === $mo->user_id) {
+            return true;
+        }
     }
 
     /**
@@ -73,7 +75,7 @@ class MoPolicy
      */
     public function delete(User $user, Mo $mo)
     {
-        // No deletes are allowed
+        // Deletes are not allowed
         return false;
     }
 

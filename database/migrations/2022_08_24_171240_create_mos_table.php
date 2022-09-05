@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('date');
             $table->foreignId('set_id')->constrained();
             $table->foreignId('office_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->integer('bags_opening_balance')->nullable();
             $table->integer('bags_received')->nullable();
             $table->integer('bags_opened')->nullable();

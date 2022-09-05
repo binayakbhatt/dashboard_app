@@ -35,6 +35,7 @@ class Mo extends Model
         'logbook',
         'rtn',
         'remarks',
+        'user_id',
     ];
 
     /**
@@ -54,5 +55,10 @@ class Mo extends Model
     public function set()
     {
         return $this->belongsTo(Set::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

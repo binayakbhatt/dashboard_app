@@ -5,10 +5,11 @@ namespace App\Http\Livewire;
 use App\Models\Mo;
 use App\Models\Office;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Builder;
-use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
+use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridEloquent};
 
 final class MoTable extends PowerGridComponent
@@ -230,21 +231,22 @@ final class MoTable extends PowerGridComponent
      * @return array<int, Button>
      */
 
-    /*
     public function actions(): array
     {
-       return [
-           Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('mo.edit', ['mo' => 'id']),
+        return [
+            Button::make('edit', 'Edit')
+                ->class('text-indigo-600 hover:text-indigo-900 hover:underline')
+                ->route('mos.edit', ['mo' => 'id'])
+                ->target('self'),
 
+            /*
            Button::make('destroy', 'Delete')
                ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
                ->route('mo.destroy', ['mo' => 'id'])
                ->method('delete')
+               */
         ];
     }
-    */
 
     /*
     |--------------------------------------------------------------------------
@@ -260,16 +262,14 @@ final class MoTable extends PowerGridComponent
      * @return array<int, RuleActions>
      */
 
-    /*
+
     public function actionRules(): array
     {
        return [
-
-           //Hide button edit for ID 1
+           //Check if user is owner of the Mo
             Rule::button('edit')
-                ->when(fn($mo) => $mo->id === 1)
+                ->when(fn (Mo $mo) => $mo->user_id !== auth()->id())
                 ->hide(),
         ];
     }
-    */
 }

@@ -81,6 +81,7 @@ class MoController extends Controller
         ]));
 
         $validated['office_id'] = Auth::user()->office_id;
+        $validated['user_id'] = Auth::user()->id;
 
         Mo::create($validated);
 

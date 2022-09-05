@@ -158,7 +158,8 @@ final class AdminUserTable extends PowerGridComponent
         return [
             Button::make('edit', 'Edit')
                 ->class('text-indigo-600 hover:text-indigo-900 hover:underline')
-                ->route('admin.users.edit', ['user' => 'id']),
+                ->route('admin.users.edit', ['user' => 'id'])
+                ->target('self'),
 
             /*
            Button::make('destroy', 'Delete')
