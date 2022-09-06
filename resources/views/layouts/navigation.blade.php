@@ -115,6 +115,11 @@
                     {{ __('Users') }}
                 </x-responsive-nav-link>
             @endif
+            @can('viewAny', \App\Models\Mo::class)
+                <x-responsive-nav-link :href="route('mos.index')" :active="request()->routeIs('mos.*')">
+                    {{ __('Mail Offices') }}
+                </x-responsive-nav-link>
+            @endcan
         </div>
 
         <!-- Responsive Settings Options -->
