@@ -59,7 +59,11 @@
             <!-- Password -->
             <div class="mt-4">
                 <x-label for="password" :value="__('Password')" />
-
+                <ul class="text-xs text-blue-900 font-semibold list-disc pl-6">
+                    <li>Minimum 8 Characters</li>
+                    <li>At least 1 Uppercase Letter & Lowercase Letter</li>
+                    <li>At least 1 Number & 1 special character</li>
+                </ul>
                 <x-input id="password" class="block mt-1 w-full" type="password" name="password" required
                     autocomplete="new-password" />
             </div>
