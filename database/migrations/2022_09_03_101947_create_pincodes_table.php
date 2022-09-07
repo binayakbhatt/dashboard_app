@@ -13,17 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('aadhaars', function (Blueprint $table) {
+        Schema::create('pincodes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('import_id')->constrained('imports');
             $table->foreignId('division_id')->constrained('divisions');
-            $table->integer('station_no');
-            $table->string('centre_name', 255);
-            $table->string('operator_name', 255);
-            $table->date('transaction_date');
-            $table->string('centre_type');
-            $table->integer('enrolments');
-            $table->integer('updates');
+            $table->string('pincode', 6);
             $table->timestamps();
         });
     }
@@ -35,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('aadhaars');
+        Schema::dropIfExists('pincodes');
     }
 };

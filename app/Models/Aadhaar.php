@@ -10,17 +10,27 @@ class Aadhaar extends Model
     use HasFactory;
 
    protected $fillable =[
-        'station_id',
+        'import_id',
+        'division_id',
+        'station_no',
         'centre_name',
-        'division',
-        'operator',
-        'date',
+        'operator_name',
+        'transaction_date',
         'centre_type',
-        'enrolment',
-        'update',
+        'enrolments',
     ];
 
     protected $casts =[
         'date' =>'date',
     ];
+
+    public function import()
+    {
+        return $this->belongsTo(Import::class);
+    }
+
+    public function division()
+    {
+        return $this->belongsTo(Division::class);
+    }
 }

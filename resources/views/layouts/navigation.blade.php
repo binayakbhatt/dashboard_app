@@ -38,7 +38,11 @@
                             {{ __('Mail Offices') }}
                         </x-nav-link>
                     @endcan
-
+                    @can('viewAny', \App\Models\Aadhaar::class)
+                        <x-nav-link :href="route('aadhaars.index')" :active="request()->routeIs('aadhaars.*')">
+                            {{ __('Aadhaar Data') }}
+                        </x-nav-link>
+                    @endcan
                 </div>
             </div>
 
@@ -118,6 +122,11 @@
             @can('viewAny', \App\Models\Mo::class)
                 <x-responsive-nav-link :href="route('mos.index')" :active="request()->routeIs('mos.*')">
                     {{ __('Mail Offices') }}
+                </x-responsive-nav-link>
+            @endcan
+            @can('viewAny', \App\Models\Aadhaar::class)
+                <x-responsive-nav-link :href="route('aadhaars.index')" :active="request()->routeIs('aadhaars.*')">
+                    {{ __('Aadhaar Data') }}
                 </x-responsive-nav-link>
             @endcan
         </div>
