@@ -51,7 +51,7 @@ class AadhaarController extends Controller
 
         // Record the file name and path in the database
         $import = Import::create([
-            'file_path' => $file_name,
+            'file_name' => $file_name,
             'file_path' => 'imports/' . $file_name,
             'is_imported' => false,
         ]);
@@ -68,7 +68,7 @@ class AadhaarController extends Controller
             ]);
 
             // redirect to the list page
-            return redirect()->back()->with('success', 'File uploaded successfully');
+            return redirect()->route('aadhaars.index')->with('success', 'File imported successfully.');
         } catch (\Exception $e) {
             // delete the file from the imports folder
             \Storage::delete('imports/' . $file_name);

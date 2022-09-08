@@ -18,6 +18,7 @@ class Aadhaar extends Model
         'transaction_date',
         'centre_type',
         'enrolments',
+        'updates',
     ];
 
     protected $casts =[
