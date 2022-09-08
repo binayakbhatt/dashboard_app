@@ -15,4 +15,9 @@ class Pincode extends Model
     {
         return $this->belongsTo(Division::class);
     }
+
+    public function aadhaars()
+    {
+        return $this->hasMany(Aadhaar::class);
+    }
 }

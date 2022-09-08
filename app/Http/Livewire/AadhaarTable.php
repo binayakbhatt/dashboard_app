@@ -50,7 +50,11 @@ final class AadhaarTable extends PowerGridComponent
     */
     public function datasource(): Builder
     {
-        return Aadhaar::query();
+        return Aadhaar::query()
+        ->join('imports', 'imports.id', '=', 'aadhaars.import_id')
+        ->join('divisions', 'divisions.id', '=', 'aadhaars.division_id')
+        ->join('pincodes', 'pincodes.id', '=', 'aadhaars.pincode_id')
+        ->select('aadhaars.*', 'imports.file_name', 'divisions.name as division_name', 'pincodes.pincode as pincode');
     }
 
     /*
@@ -85,12 +89,16 @@ final class AadhaarTable extends PowerGridComponent
             ->addColumn('id')
             ->addColumn('import_id')
             ->addColumn('division_id')
+            ->addColumn('division_name')
             ->addColumn('station_no')
             ->addColumn('centre_name')
+            ->addColumn('pincode')
             ->addColumn('operator_name')
+            ->addColumn('transaction_date')
             ->addColumn('transaction_date_formatted', fn (Aadhaar $model) => Carbon::parse($model->transaction_date)->format('d/m/Y'))
             ->addColumn('centre_type')
             ->addColumn('enrolments')
+            ->addColumn('updates')
             ->addColumn('created_at_formatted', fn (Aadhaar $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
             ->addColumn('updated_at_formatted', fn (Aadhaar $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
     }
@@ -112,17 +120,11 @@ final class AadhaarTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('ID', 'id')
-                ->makeInputRange(),
-
-            Column::make('IMPORT ID', 'import_id')
-                ->makeInputRange(),
-
-            Column::make('DIVISION ID', 'division_id')
-                ->makeInputRange(),
+            Column::make('DIVISION', 'division_name')
+                ->makeInputSelect(\App\Models\Division::all(), 'name', 'aadhaars.division_id'),
 
             Column::make('STATION NO', 'station_no')
-                ->makeInputRange(),
+                ->sortable(),
 
             Column::make('CENTRE NAME', 'centre_name')
                 ->sortable()
@@ -140,22 +142,16 @@ final class AadhaarTable extends PowerGridComponent
                 ->makeInputDatePicker(),
 
             Column::make('CENTRE TYPE', 'centre_type')
-                ->sortable()
-                ->searchable()
-                ->makeInputText(),
+                ->sortable(),
 
             Column::make('ENROLMENTS', 'enrolments')
-                ->makeInputRange(),
+                ->sortable(),
+            Column::make('UPDATES', 'updates')
+                ->sortable(),
 
             Column::make('CREATED AT', 'created_at_formatted', 'created_at')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
-
-            Column::make('UPDATED AT', 'updated_at_formatted', 'updated_at')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
+                ->hidden()
+                ->visibleInExport(True),
 
         ]
 ;

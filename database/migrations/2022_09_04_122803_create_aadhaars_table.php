@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('import_id')->constrained('imports');
             $table->foreignId('division_id')->constrained('divisions');
-            $table->integer('station_no');
+            $table->foreignId('pincode_id')->constrained('pincodes');
+            $table->string('station_no');
             $table->string('centre_name', 255);
             $table->string('operator_name', 255);
             $table->date('transaction_date');

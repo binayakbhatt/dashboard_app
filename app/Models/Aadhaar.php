@@ -14,6 +14,7 @@ class Aadhaar extends Model
         'division_id',
         'station_no',
         'centre_name',
+        'pincode_id',
         'operator_name',
         'transaction_date',
         'centre_type',
@@ -33,5 +34,10 @@ class Aadhaar extends Model
     public function division()
     {
         return $this->belongsTo(Division::class);
+    }
+
+    public function pincode()
+    {
+        return $this->belongsTo(Pincode::class);
     }
 }

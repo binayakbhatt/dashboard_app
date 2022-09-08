@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -55,18 +56,21 @@ class AadhaarsImport implements ToCollection, WithHeadingRow, WithValidation
                 throw new \Exception('Pincode not found for ' . $row['centre_summary']);
             }
 
-            // Remove ' from the centre name and trim the string and set it as station_no
-            $station_no = trim(str_replace("'", '', $row['centre_summary']));
+            // Remove ' from the station_id and trim the string and set it as station_no
+            $station_no = trim(str_replace("'", '', $row['station_id']));
 
             // Check if the station_no with the same transaction date already exists
             $aadhaar = \App\Models\Aadhaar::where('station_no', $station_no)
                 ->where('transaction_date', $row['last_update_date_ddmmyyyy'])
                 ->exists();
-            
+
             // If the station_no with the same transaction date already exists, then skip the row
             if ($aadhaar) {
                 continue;
             }
+
+            // Format transaction date as Y-m-d
+            $transaction_date = Carbon::createFromFormat('d/m/Y', $row['last_update_date_ddmmyyyy'])->format('Y-m-d');
 
             // create the aadhaar model
             \App\Models\Aadhaar::create([
@@ -74,8 +78,9 @@ class AadhaarsImport implements ToCollection, WithHeadingRow, WithValidation
                 'division_id' => $division->id,
                 'station_no' => $station_no,
                 'centre_name' => $row['centre_summary'],
+                'pincode_id' => $pincode->id,
                 'operator_name' => $row['contact_person'],
-                'transaction_date' => $row['last_update_date_ddmmyyyy'],
+                'transaction_date' => $transaction_date,
                 'centre_type' => $row['centre_type'],
                 'enrolments' => $row['total_enrolments_on_last_day'],
                 'updates' => $row['total_updates_on_last_day'],
