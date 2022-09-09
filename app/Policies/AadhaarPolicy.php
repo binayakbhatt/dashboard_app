@@ -19,7 +19,7 @@ class AadhaarPolicy
     public function viewAny(User $user)
     {
         // Must be an Administrator, Editor or Verified user
-        return $user->hasRole(['Administrator', 'Editor', 'Verified']);
+        return $user->hasRole(['Administrator', 'Aadhaar']);
     }
 
     /**
@@ -31,8 +31,8 @@ class AadhaarPolicy
      */
     public function view(User $user, Aadhaar $aadhaar)
     {
-        // Same as viewAny
-        return $this->viewAny($user);
+        // Must be an Administrator, Editor or Verified user
+        return $user->hasRole(['Administrator', 'Aadhaar']);
     }
 
     /**
@@ -43,8 +43,8 @@ class AadhaarPolicy
      */
     public function create(User $user)
     {
-        // Must be an Administrator
-        return $user->isAdmin();
+        // Must be an Administrator, Editor or Verified user
+        return $user->hasRole(['Administrator', 'Aadhaar']);
     }
 
     /**
@@ -56,8 +56,8 @@ class AadhaarPolicy
      */
     public function update(User $user, Aadhaar $aadhaar)
     {
-        // Same as create
-        return $this->create($user);
+        // Not allowed
+        return false;
     }
 
     /**
