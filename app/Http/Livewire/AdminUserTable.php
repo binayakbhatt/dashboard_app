@@ -94,6 +94,10 @@ final class AdminUserTable extends PowerGridComponent
             ->addColumn('id')
             ->addColumn('name')
             ->addColumn('email')
+            ->addColumn('email_verified_at')
+            ->addColumn('email_verified_at_formatted', function ($model) {
+                return $model->email_verified_at ? 'Yes' : 'No';
+            })
             ->addColumn('roles', function (User $user) {
                 return $user->roles->implode('name', ', ');
             })
@@ -126,8 +130,9 @@ final class AdminUserTable extends PowerGridComponent
             Column::make('Designation', 'designation')
                 ->sortable(),
 
-            Column::make('Email', 'email')
-                ->sortable(),
+            Column::make('Email', 'email'),
+
+            Column::make('Email Verified', 'email_verified_at_formatted'),
 
             Column::make('Roles', 'roles')
                 ->sortable(),
