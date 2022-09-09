@@ -24,7 +24,7 @@ class RoleMiddleware
             return $next($request);
 
         // If user is not an admin, check if they have the required role
-        if ($user->hasRoles($roles))
+        if ($user->hasRole($roles))
             return $next($request);
 
         // dd($roles);

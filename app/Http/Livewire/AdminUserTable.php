@@ -52,9 +52,9 @@ final class AdminUserTable extends PowerGridComponent
     public function datasource(): Builder
     {
         return User::query()
-            ->join('roles', 'users.role_id', '=', 'roles.id')
             ->join('offices', 'users.office_id', '=', 'offices.id')
-            ->select('users.*', 'roles.name as role', 'offices.name as office');
+            ->with('roles')
+            ->select('users.*', 'offices.name as office');
     }
 
     /*
@@ -73,10 +73,6 @@ final class AdminUserTable extends PowerGridComponent
     public function relationSearch(): array
     {
         return [
-            'role' => [
-                'model' => 'App\Models\Role',
-                'column' => 'name',
-            ],
             'office' => [
                 'model' => 'App\Models\Office',
                 'column' => 'name',
@@ -98,7 +94,9 @@ final class AdminUserTable extends PowerGridComponent
             ->addColumn('id')
             ->addColumn('name')
             ->addColumn('email')
-            ->addColumn('role')
+            ->addColumn('roles', function (User $user) {
+                return $user->roles->implode('name', ', ');
+            })
             ->addColumn('office')
             ->addColumn('designation')
             ->addColumn('created_at')
@@ -131,7 +129,7 @@ final class AdminUserTable extends PowerGridComponent
             Column::make('Email', 'email')
                 ->sortable(),
 
-            Column::make('Role', 'role')
+            Column::make('Roles', 'roles')
                 ->sortable(),
 
             Column::make('Office', 'office')

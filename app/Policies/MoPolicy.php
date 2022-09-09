@@ -19,7 +19,7 @@ class MoPolicy
     public function viewAny(User $user)
     {
         // User's role must be 'Administrator' or 'Editor' or 'Verified'
-        return $user->hasRoles(['Administrator', 'Editor', 'Verified']);
+        return $user->hasRole(['Administrator', 'Editor', 'Verified']);
     }
 
     /**
@@ -44,7 +44,7 @@ class MoPolicy
     public function create(User $user)
     {
         // User must be 'Editor'
-        if ($user->role->name === 'Editor') {
+        if ($user->hasRole(['Editor'])) {
             return true;
         }
         // Otherwise decline access
@@ -61,7 +61,7 @@ class MoPolicy
     public function update(User $user, Mo $mo)
     {
         // User must be 'Editor' and own the model
-        if ($user->role->name === 'Editor' && $user->id === $mo->user_id) {
+        if ($user->hasRole(['Editor']) && $user->id === $mo->user_id) {
             return true;
         }
     }

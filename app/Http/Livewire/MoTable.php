@@ -60,7 +60,7 @@ final class MoTable extends PowerGridComponent
             ->orderBy('mos.date', 'desc');
 
         // Check if user has any of the roles: 'Administrator', 'Verified'
-        if (!auth()->user()->hasRoles(['Administrator', 'Verified'])) {
+        if (!auth()->user()->hasRole(['Administrator', 'Verified'])) {
             $query = $query->where('mos.office_id', auth()->user()->office_id);
         }
 

@@ -59,18 +59,18 @@ class AadhaarsImport implements ToCollection, WithHeadingRow, WithValidation
             // Remove ' from the station_id and trim the string and set it as station_no
             $station_no = trim(str_replace("'", '', $row['station_id']));
 
+            // Format transaction date as Y-m-d
+            $transaction_date = Carbon::createFromFormat('d/m/Y', $row['last_update_date_ddmmyyyy'])->format('Y-m-d');
+
             // Check if the station_no with the same transaction date already exists
             $aadhaar = \App\Models\Aadhaar::where('station_no', $station_no)
-                ->where('transaction_date', $row['last_update_date_ddmmyyyy'])
+                ->where('transaction_date', $transaction_date)
                 ->exists();
 
             // If the station_no with the same transaction date already exists, then skip the row
             if ($aadhaar) {
                 continue;
             }
-
-            // Format transaction date as Y-m-d
-            $transaction_date = Carbon::createFromFormat('d/m/Y', $row['last_update_date_ddmmyyyy'])->format('Y-m-d');
 
             // create the aadhaar model
             \App\Models\Aadhaar::create([

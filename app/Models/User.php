@@ -53,16 +53,18 @@ class User extends Authenticatable implements MustVerifyEmail
 
     // Role relationships
     public function isAdmin(){
-        return $this->role->name === 'Administrator';
+        return $this->roles()->where('name', 'Administrator')->exists();
     }
 
-    public function hasRoles($roles){
-        // Check if user's role is in the list of roles
-        return in_array($this->role->name, $roles);
+    public function hasRole($roles){
+        // Get the user's roles
+        $userRoles = $this->roles->pluck('name')->toArray();
+        // Check if any of the user's roles are in the list of roles
+        return count(array_intersect($userRoles, $roles)) > 0;
     }
 
-    public function role()
+    public function roles()
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsToMany(Role::class);
     }
 }

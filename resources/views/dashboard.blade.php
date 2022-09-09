@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    @if (Auth::user()->role->name == 'Guest')
+    @if (Auth::user()->hasRole(['Guest']))
         <x-confirm-modal>
             Your Profile has not been verified yet. You will be able to access the functionalities after your profile is verified.
         </x-confirm-modal>

@@ -19,7 +19,7 @@ class AadhaarPolicy
     public function viewAny(User $user)
     {
         // Must be an Administrator, Editor or Verified user
-        return $user->hasRoles(['Administrator', 'Editor', 'Verified']);
+        return $user->hasRole(['Administrator', 'Editor', 'Verified']);
     }
 
     /**
