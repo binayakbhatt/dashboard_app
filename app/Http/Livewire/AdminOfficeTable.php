@@ -143,7 +143,7 @@ final class AdminOfficeTable extends PowerGridComponent
            Button::make('edit', 'Edit')
                ->class('text-indigo-600 hover:text-indigo-900 hover:underline')
                ->route('admin.offices.edit', ['office' => 'id'])
-               ->target('self'),
+               ->target(''),
 
         //    Button::make('destroy', 'Delete')
         //        ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')

@@ -77,13 +77,16 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'employee_id' => 'required|string|max:255|unique:users,employee_id,' . $user->id,
             'designation' => 'required|string|max:255',
-            'office_id' => 'required|exists:offices,id',
         ]);
         $validated_roles = $request->validate([
             'role_ids' => 'required|exists:roles,id',
         ]);
+        $validated_offices = $request->validate([
+            'office_ids' => 'required|exists:offices,id',
+        ]);
         $user->update($validated);
         $user->roles()->sync($validated_roles['role_ids']);
+        $user->offices()->sync($validated_offices['office_ids']);
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully');
     }
 

@@ -39,11 +39,24 @@
                                     required value="{{ $user->designation }}" />
                             </div>
                             <div>
-                                <x-label for="office_id" :value="__('Office')" />
-                                <x-input-select id="office_id" class="block mt-1 w-full" name="office_id" required>
+                                <x-label for="offices" :value="__('Currently Assigned Offices')" />
+                                <x-input-select id="offices" class="block mt-1 w-full" multiple disabled>
+                                    @foreach ($offices as $office)
+                                        @if ($user->offices->contains($office))
+                                            <option value="{{ $office->id }}" selected>{{ $office->name }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                </x-input-select>
+                            </div>
+                            <div>
+                                <x-label for="office_ids" :value="__('Select Offices to assign')" />
+                                <x-input-select id="office_ids" class="block mt-1 w-full" name="office_ids[]" multiple
+                                    required>
                                     @foreach ($offices as $office)
                                         <option value="{{ $office->id }}"
-                                            {{ $office->id == $user->office_id ? 'selected' : '' }}>{{ $office->name }}
+                                            {{ $user->offices->contains($office) ? 'selected' : '' }}>
+                                            {{ $office->name }}
                                         </option>
                                     @endforeach
                                 </x-input-select>
@@ -55,7 +68,8 @@
                                 <div class="flex gap-4">
                                     <input type="checkbox" id="{{ 'role_' . $role->id }}"
                                         class="appearance-none checked:bg-blue-500" name="role_ids[]"
-                                        value="{{ $role->id }}" {{ $user->hasRole([$role->name]) ? 'checked' : '' }}/>
+                                        value="{{ $role->id }}"
+                                        {{ $user->hasRole([$role->name]) ? 'checked' : '' }} />
                                     <x-label for="{{ 'role_' . $role->id }}" value="{{ $role->name }}" />
                                 </div>
                             @endforeach
@@ -71,7 +85,6 @@
                             </x-button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>

@@ -42,7 +42,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()->mixedCase()->symbols()],
             'employee_id' => ['required', 'integer', 'unique:users'],
             'designation' => ['required', 'string', 'max:255'],
-            'office_id' => ['required', 'exists:offices,id'],
+            'office_ids' => ['required', 'exists:offices,id'],
         ]);
 
         // Get role id for Guest
@@ -54,10 +54,13 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'employee_id' => $request->employee_id,
             'designation' => $request->designation,
-            'office_id' => $request->office_id,
+            // 'office_id' => $request->office_id,
             'is_active'=>false,
             'role_id' => $role->id,
         ]);
+
+        // Attach offices to user
+        $user->offices()->attach($request->office_ids);
 
         event(new Registered($user));
 

@@ -61,7 +61,8 @@ final class MoTable extends PowerGridComponent
 
         // Check if user has any of the roles: 'Administrator', 'Verified'
         if (!auth()->user()->hasRole(['Administrator', 'Verified'])) {
-            $query = $query->where('mos.office_id', auth()->user()->office_id);
+            $assigned_offices = auth()->user()->offices->pluck('id')->toArray();
+            $query = $query->whereIn('mos.office_id', $assigned_offices);
         }
 
         return $query;
@@ -237,7 +238,7 @@ final class MoTable extends PowerGridComponent
             Button::make('edit', 'Edit')
                 ->class('text-indigo-600 hover:text-indigo-900 hover:underline')
                 ->route('mos.edit', ['mo' => 'id'])
-                ->target('self'),
+                ->target(''),
 
             /*
            Button::make('destroy', 'Delete')

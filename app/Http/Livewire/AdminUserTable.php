@@ -52,9 +52,8 @@ final class AdminUserTable extends PowerGridComponent
     public function datasource(): Builder
     {
         return User::query()
-            ->join('offices', 'users.office_id', '=', 'offices.id')
-            ->with('roles')
-            ->select('users.*', 'offices.name as office');
+            ->with('roles', 'offices')
+            ->select('users.*');
     }
 
     /*
@@ -101,7 +100,9 @@ final class AdminUserTable extends PowerGridComponent
             ->addColumn('roles', function (User $user) {
                 return $user->roles->implode('name', ', ');
             })
-            ->addColumn('office')
+            ->addColumn('offices', function (User $user) {
+                return $user->offices->implode('name', ', ');
+            })
             ->addColumn('designation')
             ->addColumn('created_at')
             ->addColumn('created_at_formatted', fn (User $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
@@ -134,11 +135,9 @@ final class AdminUserTable extends PowerGridComponent
 
             Column::make('Email Verified', 'email_verified_at_formatted'),
 
-            Column::make('Roles', 'roles')
-                ->sortable(),
+            Column::make('Roles', 'roles'),
 
-            Column::make('Office', 'office')
-                ->sortable(),
+            Column::make('Offices', 'offices'),
         ];
     }
 
@@ -162,7 +161,7 @@ final class AdminUserTable extends PowerGridComponent
             Button::make('edit', 'Edit')
                 ->class('text-indigo-600 hover:text-indigo-900 hover:underline')
                 ->route('admin.users.edit', ['user' => 'id'])
-                ->target('self'),
+                ->target(''),
 
             /*
            Button::make('destroy', 'Delete')

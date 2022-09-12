@@ -18,12 +18,17 @@ class updateSeeder extends Seeder
         $users = \App\Models\User::all();
 
         // Loop through each user and assign the role
-        foreach ($users as $user) {
-            $user->roles()->attach($user->role_id);
-        }
+        // foreach ($users as $user) {
+        //     $user->roles()->attach($user->role_id);
+        // }
 
-        \App\Models\Role::create([
-            'name' => 'Aadhaar',
-        ]);
+        // \App\Models\Role::create([
+        //     'name' => 'Aadhaar',
+        // ]);
+
+        // Loop through each user and assign the office
+        foreach ($users as $user) {
+            $user->offices()->attach($user->office_id);
+        }
     }
 }

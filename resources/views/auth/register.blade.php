@@ -39,9 +39,9 @@
 
             <!-- Office-->
             <div class="mt-4">
-                <x-label for="office_id" :value="__('Office')" />
+                <x-label for="office_ids" :value="__('Select Offices')" />
 
-                <x-input-select id="office_id" class="block mt-1 w-full" name="office_id" required>
+                <x-input-select id="office_ids" class="block mt-1 w-full" name="office_ids[]" required multiple>
                     @foreach ($offices as $office)
                         <option value="{{ $office->id }}">{{ $office->name }}</option>
                     @endforeach
