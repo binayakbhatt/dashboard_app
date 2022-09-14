@@ -154,9 +154,9 @@ class MoController extends Controller
             'date' => 'required|date',
             'set_id' => 'required|integer|exists:sets,id',
             'remarks' => 'nullable|string|max:100',
+            'office_id' => 'required|integer|exists:offices,id',
         ]));
 
-        $validated['office_id'] = Auth::user()->office_id;
         $validated['user_id'] = Auth::user()->id;
 
         $mo->update($validated);
