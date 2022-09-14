@@ -18,7 +18,7 @@
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
                             <div class="mt-4 col-span-2 md:col-span-1">
                                 <x-label for="office_id" :value="__('Office')" />
-                                <x-input-select id="office_id" class="block mt-1 w-full" name="office_id" disabled>
+                                <x-input-select id="office_id" class="block mt-1 w-full" name="office_id" required>
                                     <option value="" selected disabled>Select</option>
                                     @foreach ($offices as $office)
                                         <option value="{{ $office->id }}"
