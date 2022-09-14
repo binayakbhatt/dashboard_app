@@ -23,5 +23,10 @@ class UserSeeder extends Seeder
             'role_id' => 1,
             'office_id' => 1,
         ]);
+
+        $admin_user = \App\Models\User::where('email', 'admin@test.com')->first();
+        $admin_role = \App\Models\Role::where('name', 'Administrator')->first();
+
+        $admin_user->roles()->attach($admin_role);
     }
 }
