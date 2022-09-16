@@ -14,7 +14,7 @@
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
-            <h3 class="text-center text-cyan-700 font-bold"> Login </h3>
+            <h3 class="text-center text-cyan-700 font-bold"> Dashboard Login </h3>
             <!-- Email Address -->
             <div>
                 <x-label for="email" :value="__('Email')" />
