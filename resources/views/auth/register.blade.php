@@ -2,7 +2,7 @@
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <img src="{{ url('/img/India_Post_Logo.png') }}" alt="India Post Logo" class="w-32">
+                <img src="{{ url('/img/Logo.png') }}" alt="Dashboard Logo" class="w-32">
             </a>
         </x-slot>
 
@@ -10,9 +10,14 @@
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
         <form method="POST" action="{{ route('register') }}">
-
             @csrf
             <h3 class="text-center text-cyan-700 font-bold"> Registration </h3>
+            <p class="text-center text bold py-4">
+                After registration, you will receive an email with a link to confirm your email address.
+                <br>
+                <br>
+                Further, your account will be activated by the administrator.
+            </p>
             <!-- Name -->
             <div class="mt-4">
                 <x-label for="name" :value="__('Name')" />
