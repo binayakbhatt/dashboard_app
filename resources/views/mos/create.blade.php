@@ -10,6 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <!-- Validation Errors -->
+                    <x-success-message />
                     <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
                     <form method="POST" action="{{ route('mos.store') }}">
@@ -76,9 +77,12 @@
                             </x-button>
                         </div>
                     </form>
-                    <x-confirm-modal>
-                        Please fill only those fields that are relavant to your office. Irrelevant fields may be left blank.
-                    </x-confirm-modal>
+                    @if (!session('success'))
+                        <x-confirm-modal>
+                            Please fill only those fields that are relavant to your office. Irrelevant fields may be
+                            left blank.
+                        </x-confirm-modal>
+                    @endif
                 </div>
             </div>
         </div>

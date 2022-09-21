@@ -31,6 +31,7 @@ class Mo extends Model
         'sa_WS',
         'mts_WS',
         'dwl_WS',
+        'gds_WS',
         'manpower',
         'logbook',
         'rtn',

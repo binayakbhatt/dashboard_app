@@ -25,7 +25,7 @@ final class MoTable extends PowerGridComponent
     */
     public function setUp(): array
     {
-        // $this->showCheckBox();
+        $this->showCheckBox();
 
         return [
             Exportable::make('export')
@@ -84,14 +84,8 @@ final class MoTable extends PowerGridComponent
     public function relationSearch(): array
     {
         return [
-            'office_id' => [
-                'model' => Office::class,
-                'column' => 'name',
-            ],
-            'set_id' => [
-                'model' => Set::class,
-                'column' => 'name',
-            ],
+            'office' => ['name'],
+            'set' => ['name'],
         ];
     }
 
@@ -134,6 +128,7 @@ final class MoTable extends PowerGridComponent
             ->addColumn('sa_WS')
             ->addColumn('mts_WS')
             ->addColumn('dwl_WS')
+            ->addColumn('gds_WS')
 
             ->addColumn('manpower')
             ->addColumn('manpower_formatted', function (Mo $model) {
@@ -200,6 +195,7 @@ final class MoTable extends PowerGridComponent
             Column::make('SA', 'sa_WS'),
             Column::make('MTS', 'mts_WS'),
             Column::make('DWL', 'dwl_WS'),
+            Column::make('GDS', 'gds_WS'),
 
             // Column::make('Manpower', 'manpower_formatted'),
             // Column::make('Logbook', 'logbook_formatted'),

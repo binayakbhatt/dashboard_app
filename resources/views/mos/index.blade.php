@@ -7,9 +7,9 @@
             @can('create', App\Models\Mo::class)
                 <div
                     class="flex items-center justify-end text-cyan-500 background-transparent font-bold uppercase outline-none focus:outline-none ease-linear transition-all duration-150">
-                    <x-nav-link :href="route('mos.create')">
+                    <x-button-link :href="route('mos.create')">
                         {{ __('Add Data') }}
-                    </x-nav-link>
+                    </x-button-link>
                 </div>
             @endcan
         </span>
@@ -24,4 +24,9 @@
             </div>
         </div>
     </div>
+    <style>
+        #input_date_formatted{
+            min-width: 7rem !important;
+        }
+    </style>
 </x-app-layout>

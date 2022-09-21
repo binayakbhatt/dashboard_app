@@ -36,7 +36,7 @@ class MoController extends Controller
         $sets = Set::all();
         // Get all offices of the logged in user
         $offices = auth()->user()->offices;
-        $int_fields = ['bags_opening_balance', 'bags_received', 'bags_opened', 'bags_closed', 'bags_dispatched', 'bags_transferred', 'articles_received', 'articles_closed', 'articles_pending', 'customs_examination', 'customs_clearance', 'customs_pending', 'sa_WS', 'mts_WS', 'dwl_WS'];
+        $int_fields = ['bags_opening_balance', 'bags_received', 'bags_opened', 'bags_closed', 'bags_dispatched', 'bags_transferred', 'articles_received', 'articles_closed', 'articles_pending', 'customs_examination', 'customs_clearance', 'customs_pending', 'sa_WS', 'mts_WS', 'dwl_WS', 'gds_WS'];
         $boolean_fields = [
             'manpower' => 'Man Power as per Est norms achieved',
             'logbook' => 'RTN/MMS logbook properly maintained',
@@ -53,7 +53,7 @@ class MoController extends Controller
      */
     public function store(Request $request)
     {
-        $int_fields = ['bags_opening_balance', 'bags_received', 'bags_opened', 'bags_closed', 'bags_dispatched', 'bags_transferred', 'articles_received', 'articles_closed', 'articles_pending', 'customs_examination', 'customs_clearance', 'customs_pending', 'sa_WS', 'mts_WS', 'dwl_WS'];
+        $int_fields = ['bags_opening_balance', 'bags_received', 'bags_opened', 'bags_closed', 'bags_dispatched', 'bags_transferred', 'articles_received', 'articles_closed', 'articles_pending', 'customs_examination', 'customs_clearance', 'customs_pending', 'sa_WS', 'mts_WS', 'dwl_WS', 'gds_WS'];
         $boolean_fields = [
             'manpower' => 'Man Power as per Est norms achieved',
             'logbook' => 'RTN/MMS logbook properly maintained',
@@ -86,7 +86,7 @@ class MoController extends Controller
 
         Mo::create($validated);
 
-        return redirect()->route('mos.index')->with('success', 'Data added successfully.');
+        return redirect()->route('mos.create')->with('success', 'Data added successfully.');
     }
 
     /**
@@ -110,7 +110,7 @@ class MoController extends Controller
     {
         $sets = Set::all();
         $offices = Office::all();
-        $int_fields = ['bags_opening_balance', 'bags_received', 'bags_opened', 'bags_closed', 'bags_dispatched', 'bags_transferred', 'articles_received', 'articles_closed', 'articles_pending', 'customs_examination', 'customs_clearance', 'customs_pending', 'sa_WS', 'mts_WS', 'dwl_WS'];
+        $int_fields = ['bags_opening_balance', 'bags_received', 'bags_opened', 'bags_closed', 'bags_dispatched', 'bags_transferred', 'articles_received', 'articles_closed', 'articles_pending', 'customs_examination', 'customs_clearance', 'customs_pending', 'sa_WS', 'mts_WS', 'dwl_WS', 'gds_WS'];
         $boolean_fields = [
             'manpower' => 'Man Power as per Est norms achieved',
             'logbook' => 'RTN/MMS logbook properly maintained',
@@ -128,7 +128,7 @@ class MoController extends Controller
      */
     public function update(Request $request, Mo $mo)
     {
-        $int_fields = ['bags_opening_balance', 'bags_received', 'bags_opened', 'bags_closed', 'bags_dispatched', 'bags_transferred', 'articles_received', 'articles_closed', 'articles_pending', 'customs_examination', 'customs_clearance', 'customs_pending', 'sa_WS', 'mts_WS', 'dwl_WS'];
+        $int_fields = ['bags_opening_balance', 'bags_received', 'bags_opened', 'bags_closed', 'bags_dispatched', 'bags_transferred', 'articles_received', 'articles_closed', 'articles_pending', 'customs_examination', 'customs_clearance', 'customs_pending', 'sa_WS', 'mts_WS', 'dwl_WS', 'gds_WS'];
         $boolean_fields = [
             'manpower' => 'Man Power as per Est norms achieved',
             'logbook' => 'RTN/MMS logbook properly maintained',
