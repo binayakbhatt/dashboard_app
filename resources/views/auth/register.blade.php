@@ -2,7 +2,7 @@
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <img src="{{ url('/img/Logo.png') }}" alt="Dashboard Logo" class="w-32">
+                <x-application-logo class="block h-10 w-auto fill-current"/>
             </a>
         </x-slot>
 
