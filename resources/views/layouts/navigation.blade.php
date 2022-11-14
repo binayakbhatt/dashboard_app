@@ -43,6 +43,11 @@
                             {{ __('Aadhaar Data') }}
                         </x-nav-link>
                     @endcan
+                    @can('viewAny', \App\Models\Ranking::class)
+                        <x-nav-link :href="route('rankings.index')" :active="request()->routeIs('rankings.*')">
+                            {{ __('Rankings') }}
+                        </x-nav-link>
+                    @endcan
                 </div>
             </div>
 

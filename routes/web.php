@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +37,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::resource('mos', App\Http\Controllers\MoController::class)->only(['index', 'store', 'create', 'edit', 'update']);
         Route::resource('aadhaars', App\Http\Controllers\AadhaarController::class)->only(['index', 'store', 'create', 'edit', 'update']);
     });
+
+    Route::group(['middleware' => ['role:admin']], function(){
+        Route::resource('rankings', App\Http\Controllers\RankingController::class)->only(['store', 'create', 'edit', 'update']);
+    });
+    Route::get('/rankings', [App\Http\Controllers\RankingController::class, 'index'])->name('rankings.index');
 });
 
 
