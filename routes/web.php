@@ -39,9 +39,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     });
 
     Route::group(['middleware' => ['role:admin']], function(){
-        Route::resource('rankings', App\Http\Controllers\RankingController::class)->only(['store', 'create', 'edit', 'update']);
+        Route::resource('rankings', App\Http\Controllers\RankingController::class)->only(['store', 'create', 'edit']);
     });
     Route::get('/rankings', [App\Http\Controllers\RankingController::class, 'index'])->name('rankings.index');
+    Route::put('/rankings/{service}', [App\Http\Controllers\RankingController::class, 'update'])->name('rankings.update');
 });
 
 
