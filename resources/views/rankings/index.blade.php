@@ -15,6 +15,9 @@
     </x-slot>
 
     @foreach ($mailServices as $service)
+        @php
+            $hasRanking = $service->ranking()->exists();
+        @endphp
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -29,10 +32,49 @@
                                 {{ $previous_month }}
                             </span>
                         </h2>
+                        {{-- First --}}
                         <div class="grid md:grid-cols-3 gap-6 gap-y-6">
-                            <x-image-card title="test" description="test" />
-                            <x-image-card title="test" description="test" />
-                            <x-image-card title="test" description="test" />
+                            <x-image-card>
+                                <x-slot name="image">
+                                    <img class="rounded-t-lg w-full h-52 object-cover"
+                                        src="{{ $hasRanking ? url('storage/uploads/' . $service->ranking->image_path_first) : '' }}"
+                                        alt="" />
+                                </x-slot>
+                                <x-slot name="title">
+                                    First Place
+                                </x-slot>
+                                <x-slot name="description">
+                                    {{ $hasRanking ? $service->ranking->first_place : '' }}
+                                </x-slot>
+                            </x-image-card>
+
+                            <x-image-card>
+                                <x-slot name="image">
+                                    <img class="rounded-t-lg w-full h-52 object-cover"
+                                        src="{{ $hasRanking ? url('storage/uploads/' . $service->ranking->image_path_second) : '' }}"
+                                        alt="" />
+                                </x-slot>
+                                <x-slot name="title">
+                                    Second Place
+                                </x-slot>
+                                <x-slot name="description">
+                                    {{ $hasRanking ? $service->ranking->second_place : '' }}
+                                </x-slot>
+                            </x-image-card>
+
+                            <x-image-card>
+                                <x-slot name="image">
+                                    <img class="rounded-t-lg w-full h-52 object-cover"
+                                        src="{{ $hasRanking ? url('storage/uploads/' . $service->ranking->image_path_third) : '' }}"
+                                        alt="" />
+                                </x-slot>
+                                <x-slot name="title">
+                                    Third Place
+                                </x-slot>
+                                <x-slot name="description">
+                                    {{ $hasRanking ? $service->ranking->third_place : '' }}
+                                </x-slot>
+                            </x-image-card>
                         </div>
                     </div>
                 </div>
