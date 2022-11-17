@@ -79,13 +79,13 @@ class RankingController extends Controller
 
         $validated = $request->validate([
             'first_place' => 'required|max:255',
-            'first_place_image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'first_place_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
             'second_place' => 'required|max:255',
-            'second_place_image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'second_place_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
             'third_place' => 'required|max:255',
-            'third_place_image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'third_place_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $ranking = Ranking::where('mail_service_id', $service->id)->firstOrCreate(
@@ -132,6 +132,8 @@ class RankingController extends Controller
         // $ranking->third_place = $validated->third_place;
 
         $ranking->save();
+
+        return redirect()->route('rankings.index');
     }
 
     /**

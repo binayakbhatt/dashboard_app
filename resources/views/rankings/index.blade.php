@@ -5,12 +5,14 @@
                 {{ __('Rankings') }}
             </h2>
 
-            <div
-                class="flex items-center justify-end text-cyan-500 background-transparent font-bold uppercase outline-none focus:outline-none ease-linear transition-all duration-150">
-                <x-nav-link :href="route('rankings.create')">
-                    {{ __('Update Rankings') }}
-                </x-nav-link>
-            </div>
+            @can('create', App\Models\Ranking::class)
+                <div
+                    class="flex items-center justify-end text-cyan-500 background-transparent font-bold uppercase outline-none focus:outline-none ease-linear transition-all duration-150">
+                    <x-nav-link :href="route('rankings.create')">
+                        {{ __('Update Rankings') }}
+                    </x-nav-link>
+                </div>
+            @endcan
         </span>
     </x-slot>
 
