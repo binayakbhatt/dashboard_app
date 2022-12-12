@@ -45,10 +45,10 @@ final class ByodTable extends PowerGridComponent
     */
 
     /**
-    * PowerGrid datasource.
-    *
-    * @return Builder<\App\Models\Byod>
-    */
+     * PowerGrid datasource.
+     *
+     * @return Builder<\App\Models\Byod>
+     */
     public function datasource(): Builder
     {
         return Byod::query()
@@ -113,7 +113,7 @@ final class ByodTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Columns.
      *
      * @return array<int, Column>
@@ -155,7 +155,9 @@ final class ByodTable extends PowerGridComponent
 
             Column::make('DIVISION ID', 'division_name', 'division_id')
                 ->makeInputSelect(
-                    Division::all(), 'name', 'division_id'
+                    Division::all(),
+                    'name',
+                    'division_id'
                 ),
 
             Column::make('EMPLOYEE ID', 'employee_id')
@@ -169,8 +171,7 @@ final class ByodTable extends PowerGridComponent
                 ->searchable()
                 ->sortable()
                 ->makeInputDatePicker(),
-        ]
-;
+        ];
     }
 
     /*
@@ -181,27 +182,27 @@ final class ByodTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Byod Action Buttons.
      *
      * @return array<int, Button>
      */
 
-    /*
+
     public function actions(): array
     {
-       return [
-           Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('byod.edit', ['byod' => 'id']),
+        return [
+            Button::make('edit', 'Edit')
+                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->route('byods.edit', ['byod' => 'id']),
 
-           Button::make('destroy', 'Delete')
-               ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('byod.destroy', ['byod' => 'id'])
-               ->method('delete')
+            //    Button::make('destroy', 'Delete')
+            //        ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+            //        ->route('byod.destroy', ['byod' => 'id'])
+            //        ->method('delete')
         ];
     }
-    */
+
 
     /*
     |--------------------------------------------------------------------------
@@ -211,22 +212,21 @@ final class ByodTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Byod Action Rules.
      *
      * @return array<int, RuleActions>
      */
 
-    /*
+
     public function actionRules(): array
     {
-       return [
+        return [
 
-           //Hide button edit for ID 1
+            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($byod) => $byod->id === 1)
+                ->when(fn (Byod $model) => $model->created_by !== auth()->id())
                 ->hide(),
         ];
     }
-    */
 }

@@ -82,7 +82,8 @@ class ByodController extends Controller
      */
     public function edit(Byod $byod)
     {
-        //
+        $divisions = Division::all();
+        return view('Byod.edit', compact('byod', 'divisions'));
     }
 
     /**
@@ -94,7 +95,22 @@ class ByodController extends Controller
      */
     public function update(Request $request, Byod $byod)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'employee_id' => 'required|max:255',
+            'email' => 'required|max:255|email',
+            'mobile' => 'required|max:255',
+            'make_model' => 'required|max:255',
+            'imei' => 'required|max:255|unique:byods,imei,' . $byod->id,
+            'post_office' => 'required|max:255',
+            'date_of_purchase' => 'required|date',
+            'date_of_acceptance' => 'required|date',
+            'division_id' => 'required|exists:divisions,id',
+        ]);
+
+        $byod->update($validated);
+
+        return redirect()->route('byods.index')->with('success', 'Data updated successfully.');
     }
 
     /**

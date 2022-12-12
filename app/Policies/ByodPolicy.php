@@ -61,7 +61,7 @@ class ByodPolicy
     public function update(User $user, Byod $byod)
     {
         // User must be 'Byod' and the user_id must be the same
-        if ($user->hasRole(['Byod']) && $user->id == $byod->user_id) {
+        if ($user->hasRole(['Byod', 'Administrator']) && $user->id == $byod->created_by) {
             return true;
         }
 
