@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Mo;
+use App\Models\Byod;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class MoPolicy
+class ByodPolicy
 {
     use HandlesAuthorization;
 
@@ -18,18 +18,18 @@ class MoPolicy
      */
     public function viewAny(User $user)
     {
-        // User's role must be 'Administrator' or 'Editor' or 'Verified'
-        return $user->hasRole(['Administrator', 'Editor', 'Verified']);
+        // User's role must be 'Administrator' or 'Editor' or 'Verified' or 'Byod'
+        return $user->hasRole(['Administrator', 'Editor', 'Verified', 'Byod']);
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Mo  $mo
+     * @param  \App\Models\Byod  $byod
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Mo $mo)
+    public function view(User $user, Byod $byod)
     {
         // same as viewAny()
         return $this->viewAny($user);
@@ -43,8 +43,8 @@ class MoPolicy
      */
     public function create(User $user)
     {
-        // User must be 'Editor'
-        if ($user->hasRole(['Editor'])) {
+        // User must be 'Byod'
+        if ($user->hasRole(['Byod', 'Administrator'])) {
             return true;
         }
         // Otherwise decline access
@@ -55,15 +55,16 @@ class MoPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Mo  $mo
+     * @param  \App\Models\Byod  $byod
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Mo $mo)
+    public function update(User $user, Byod $byod)
     {
-        // User must be 'Editor' and own the model
-        if ($user->hasRole(['Editor']) && $user->id === $mo->user_id) {
+        // User must be 'Byod' and the user_id must be the same
+        if ($user->hasRole(['Byod']) && $user->id == $byod->user_id) {
             return true;
         }
+
         // Otherwise decline access
         return false;
     }
@@ -72,12 +73,12 @@ class MoPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Mo  $mo
+     * @param  \App\Models\Byod  $byod
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Mo $mo)
+    public function delete(User $user, Byod $byod)
     {
-        // Deletes are not allowed
+        //  Not implemented
         return false;
     }
 
@@ -85,12 +86,12 @@ class MoPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Mo  $mo
+     * @param  \App\Models\Byod  $byod
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Mo $mo)
+    public function restore(User $user, Byod $byod)
     {
-        // No restores are allowed
+        // Not implemented
         return false;
     }
 
@@ -98,12 +99,12 @@ class MoPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Mo  $mo
+     * @param  \App\Models\Byod  $byod
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Mo $mo)
+    public function forceDelete(User $user, Byod $byod)
     {
-        // No force deletes are allowed
+        // Not implemented
         return false;
     }
 }

@@ -43,6 +43,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     });
     Route::get('/rankings', [App\Http\Controllers\RankingController::class, 'index'])->name('rankings.index');
     Route::put('/rankings/{service}', [App\Http\Controllers\RankingController::class, 'update'])->name('rankings.update');
+
+    Route::group(['middleware' => ['role:Byod,Admin']], function(){
+        Route::resource('byods', App\Http\Controllers\ByodController::class)->only(['index', 'store', 'create', 'edit', 'update']);
+    });
 });
 
 

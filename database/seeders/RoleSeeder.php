@@ -20,13 +20,17 @@ class RoleSeeder extends Seeder
             'Editor',
             'Verified',
             'Guest',
+            'Byod',
         ];
 
         // Create roles in database
         foreach ($roles as $role) {
-            \App\Models\Role::create([
-                'name' => $role,
-            ]);
+            $exists = \App\Models\Role::where('name', $role)->first();
+            if (!$exists) {
+                \App\Models\Role::create([
+                    'name' => $role,
+                ]);
+            }
         }
     }
 }

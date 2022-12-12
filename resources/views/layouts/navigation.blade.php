@@ -48,6 +48,11 @@
                             {{ __('Rankings') }}
                         </x-nav-link>
                     @endcan
+                    @can('viewAny', \App\Models\Byod::class)
+                        <x-nav-link :href="route('byods.index')" :active="request()->routeIs('byods.*')">
+                            {{ __('BYOD') }}
+                        </x-nav-link>
+                    @endcan
                 </div>
             </div>
 
