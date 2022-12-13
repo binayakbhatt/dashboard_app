@@ -67,4 +67,15 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(Role::class);
     }
+
+    public function divisions()
+    {
+        $offices = $this->offices;
+        $divisions = [];
+        foreach ($offices as $office) {
+            $divisions[] = $office->division;
+        }
+
+        return $divisions;
+    }
 }

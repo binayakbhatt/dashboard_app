@@ -49,7 +49,7 @@ final class AdminOfficeTable extends PowerGridComponent
     */
     public function datasource(): Builder
     {
-        return Office::query()->with('officeType');
+        return Office::query()->with('officeType', 'division');
     }
 
     /*
@@ -85,6 +85,7 @@ final class AdminOfficeTable extends PowerGridComponent
             ->addColumn('name')
             ->addColumn('type')
             ->addColumn('officeType.name')
+            ->addColumn('division.name')
             ->addColumn('created_at')
             ->addColumn('created_at_formatted', fn (Office $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
     }
@@ -111,6 +112,10 @@ final class AdminOfficeTable extends PowerGridComponent
                 ->sortable(),
 
             Column::make('Name', 'name')
+                ->searchable()
+                ->sortable(),
+            
+            Column::make('Division', 'division.name')
                 ->searchable()
                 ->sortable(),
 

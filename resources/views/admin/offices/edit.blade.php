@@ -32,6 +32,15 @@
                                     @endforeach
                                 </x-input-select>
                             </div>
+
+                            <div>
+                                <x-label for="division_id" :value="__('Division')" />
+                                <x-input-select id="division_id" class="block mt-1 w-full" name="division_id" required>
+                                    @foreach ($divisions as $division)
+                                        <option value="{{ $division->id }}" {{ $division->id == $office->division_id ? 'selected' : '' }}>{{ $division->name }}</option>
+                                    @endforeach
+                                </x-input-select>
+                            </div>
                         </div>
                         <div class="flex items-center justify-end mt-4 ">
                             <x-button class="ml-3" type="submit">

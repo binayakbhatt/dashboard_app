@@ -31,8 +31,14 @@ class ByodController extends Controller
      */
     public function create()
     {
+        $user = auth()->user();
+        $user_divisions = $user->divisions();
+        $user_division_ids = [];
+        foreach ($user_divisions as $user_division) {
+            array_push($user_division_ids, $user_division['id']);
+        }
         $divisions = Division::all();
-        return view('Byod.create', compact('divisions'));
+        return view('Byod.create', compact('divisions', 'user_division_ids'));
     }
 
     /**
@@ -82,8 +88,14 @@ class ByodController extends Controller
      */
     public function edit(Byod $byod)
     {
+        $user = auth()->user();
+        $user_divisions = $user->divisions();
+        $user_division_ids = [];
+        foreach ($user_divisions as $user_division) {
+            array_push($user_division_ids, $user_division['id']);
+        }
         $divisions = Division::all();
-        return view('Byod.edit', compact('byod', 'divisions'));
+        return view('Byod.edit', compact('byod', 'divisions', 'user_division_ids'));
     }
 
     /**

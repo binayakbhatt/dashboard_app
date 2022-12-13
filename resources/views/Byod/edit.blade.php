@@ -81,7 +81,7 @@
                                         <option value="" selected disabled>Select</option>
                                         @foreach ($divisions as $division)
                                             <option value="{{ $division->id }}"
-                                                {{ $byod->division_id == $division->id ? 'selected' : '' }}>
+                                                {{ $byod->division_id == $division->id ? 'selected' : '' }} {{ in_array($division->id, $user_division_ids) ? '' : 'disabled' }}>
                                                 {{ $division->name }}</option>
                                         @endforeach
                                     </x-input-select>

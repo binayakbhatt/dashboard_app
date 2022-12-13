@@ -77,7 +77,7 @@
                                         required>
                                         <option value="" selected disabled>Select</option>
                                         @foreach ($divisions as $division)
-                                            <option value="{{ $division->id }}">{{ $division->name }}</option>
+                                            <option value="{{ $division->id }}" {{ in_array($division->id, $user_division_ids) ? '' : 'disabled' }}>{{ $division->name }}</option>
                                         @endforeach
                                     </x-input-select>
                                 </div>

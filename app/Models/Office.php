@@ -16,6 +16,7 @@ class Office extends Model
         'name',
         'facility_id',
         'office_type_id',
+        'division_id',
     ];
 
     public function users()
@@ -25,5 +26,9 @@ class Office extends Model
     
     public function officeType(){
         return $this->belongsTo(OfficeType::class);
+    }
+
+    public function division(){
+        return $this->belongsTo(Division::class);
     }
 }

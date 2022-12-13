@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Office;
+use App\Models\Division;
 use App\Models\OfficeType;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class OfficeController extends Controller
 {
@@ -28,8 +29,9 @@ class OfficeController extends Controller
     public function create()
     {
         $officeTypes = OfficeType::all();
+        $divisions = Division::all();
 
-        return view('admin.offices.create', compact('officeTypes'));
+        return view('admin.offices.create', compact('officeTypes', 'divisions'));
     }
 
     /**
@@ -44,6 +46,7 @@ class OfficeController extends Controller
             'name' => 'required|string|max:255',
             'facility_id' => 'required|string|max:255',
             'office_type_id' => 'required|exists:office_types,id',
+            'division_id' => 'required|exists:divisions,id',
         ]);
         
         $office->create($validated);
@@ -73,10 +76,10 @@ class OfficeController extends Controller
      */
     public function edit(Office $office)
     {   
-        // Get OfficeTypes
         $officeTypes = OfficeType::all();
+        $divisions = Division::all();
         // Return admin offices edit view
-        return view('admin.offices.edit', compact('office', 'officeTypes'));
+        return view('admin.offices.edit', compact('office', 'officeTypes', 'divisions'));
 
     }
 
@@ -93,6 +96,7 @@ class OfficeController extends Controller
             'name' => 'required|string|max:255',
             'facility_id' => 'required|string|max:255',
             'office_type_id' => 'required|exists:office_types,id',
+            'division_id' => 'required|exists:divisions,id',
         ]);
 
         $office->update($validated);

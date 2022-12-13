@@ -16,15 +16,19 @@ class DivisionSeeder extends Seeder
     {
         // Define divisions array
         $divisions = [
-            'Tinsukia','Sivasagar','Guwahati','RMS Silchar','Nalbari','Dibrugarh','Darrang','Goalpara','Nagaon','Cachar'
+            'Tinsukia', 'Sivasagar', 'Guwahati', 'RMS Silchar', 'Nalbari', 'Dibrugarh', 'Darrang', 'Goalpara', 'Nagaon', 'Cachar', 'RMS GH'
         ];
 
         // Loop through divisions array
         foreach ($divisions as $division) {
-            // Create division
-            \App\Models\Division::create([
-                'name' => $division,
-            ]);
+            // Check if division exists
+            $exists = \App\Models\Division::where('name', $division)->first();
+            if (!$exists) {
+                // Create division
+                \App\Models\Division::create([
+                    'name' => $division,
+                ]);
+            }
         }
     }
 }

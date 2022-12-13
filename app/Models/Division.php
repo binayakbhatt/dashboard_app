@@ -19,4 +19,9 @@ class Division extends Model
     {
         return $this->hasMany(Pincode::class);
     }
+
+    public function offices()
+    {
+        return $this->hasMany(Office::class);
+    }
 }
