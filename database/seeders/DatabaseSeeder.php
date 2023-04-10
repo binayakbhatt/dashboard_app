@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SetSeeder::class);
         $this->call(DivisionSeeder::class);
         $this->call(PincodeSeeder::class);
+        $this->call(RtnSeeder::class);
     }
 }

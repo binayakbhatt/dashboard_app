@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::resource('sets', App\Http\Controllers\Admin\SetController::class)->only(['index', 'store', 'create']);
         Route::resource('office_types', App\Http\Controllers\Admin\OfficeTypeController::class)->only(['index', 'store', 'create']);
         Route::resource('users', App\Http\Controllers\Admin\UserController::class)->only(['index', 'edit', 'update']);
+        Route::resource('rtns', App\Http\Controllers\Admin\RtnController::class)->only(['index', 'show', 'store', 'create']);
     });
 
     Route::group(['middleware' => ['role:Editor,Verified']], function(){

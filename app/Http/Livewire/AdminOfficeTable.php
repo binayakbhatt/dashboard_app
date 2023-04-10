@@ -49,7 +49,10 @@ final class AdminOfficeTable extends PowerGridComponent
     */
     public function datasource(): Builder
     {
-        return Office::query()->with('officeType', 'division');
+        return Office::query()
+            ->join('office_types', 'office_types.id', '=', 'offices.office_type_id')
+            ->join('divisions', 'divisions.id', '=', 'offices.division_id')
+            ->select('offices.*', 'office_types.name as officeType_name', 'divisions.name as division_name');
     }
 
     /*
@@ -84,8 +87,8 @@ final class AdminOfficeTable extends PowerGridComponent
             ->addColumn('facility_id')
             ->addColumn('name')
             ->addColumn('type')
-            ->addColumn('officeType.name')
-            ->addColumn('division.name')
+            ->addColumn('officeType_name')
+            ->addColumn('division_name')
             ->addColumn('created_at')
             ->addColumn('created_at_formatted', fn (Office $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
     }
@@ -115,11 +118,11 @@ final class AdminOfficeTable extends PowerGridComponent
                 ->searchable()
                 ->sortable(),
             
-            Column::make('Division', 'division.name')
+            Column::make('Division', 'division_name')
                 ->searchable()
                 ->sortable(),
 
-            Column::make('Type', 'officeType.name'),
+            Column::make('Type', 'officeType_name'),
 
             Column::make('Created at', 'created_at_formatted', 'created_at')
                 ->makeInputDatePicker()

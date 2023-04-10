@@ -16,21 +16,26 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     @if (Auth::user()->isAdmin())
-                        <x-nav-link :href="route('admin.offices.index')" :active="request()->routeIs('admin.offices.*')">
-                            {{ __('Offices') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('admin.office_types.index')" :active="request()->routeIs('admin.office_types.*')">
-                            {{ __('Off Types') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
-                            {{ __('Roles') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('admin.sets.index')" :active="request()->routeIs('admin.sets.*')">
-                            {{ __('Sets') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
-                            {{ __('Users') }}
-                        </x-nav-link>
+                        <x-nav-dropdown-button data-dropdown-toggle="management_dropdownNavbar">
+                            {{ __('Management') }}
+                        </x-nav-dropdown-button>
+                        <x-nav-dropdown-wrapper id="management_dropdownNavbar">
+                            <x-nav-dropdown-item :href="route('admin.offices.index')" :active="request()->routeIs('admin.offices.*')">
+                                {{ __('Offices') }}
+                            </x-nav-dropdown-item>
+                            <x-nav-dropdown-item :href="route('admin.office_types.index')" :active="request()->routeIs('admin.office_types.*')">
+                                {{ __('Off Types') }}
+                            </x-nav-dropdown-item>
+                            <x-nav-dropdown-item :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
+                                {{ __('Roles') }}
+                            </x-nav-dropdown-item>
+                            <x-nav-dropdown-item :href="route('admin.sets.index')" :active="request()->routeIs('admin.sets.*')">
+                                {{ __('Sets') }}
+                            </x-nav-dropdown-item>
+                            <x-nav-dropdown-item :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                                {{ __('Users') }}
+                            </x-nav-dropdown-item>
+                        </x-nav-dropdown-wrapper>
                     @endif
 
                     @can('viewAny', \App\Models\Mo::class)
