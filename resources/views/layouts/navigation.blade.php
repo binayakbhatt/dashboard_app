@@ -35,6 +35,9 @@
                             <x-nav-dropdown-item :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                                 {{ __('Users') }}
                             </x-nav-dropdown-item>
+                            <x-nav-dropdown-item :href="route('admin.rtns.index')" :active="request()->routeIs('admin.rtns.*')">
+                                {{ __('RTNs') }}
+                            </x-nav-dropdown-item>
                         </x-nav-dropdown-wrapper>
                     @endif
 
