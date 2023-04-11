@@ -24,7 +24,7 @@ class MailServiceSeeder extends Seeder
         ];
 
         foreach ($services as $service) {
-            \App\Models\MailService::create([
+            \App\Models\MailService::updateOrCreate([
                 'name' => $service,
             ]);
         }

@@ -25,7 +25,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     })->name('dashboard');
 
     // Routes group for admin
-    Route::group(['middleware' => ['role:admin'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::group(['middleware' => ['role:Administrator'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('offices', App\Http\Controllers\Admin\OfficeController::class)->only(['index', 'edit', 'update', 'store', 'create', 'destroy']);
         Route::resource('roles', App\Http\Controllers\Admin\RoleController::class)->only(['index','create','store']);
         Route::resource('sets', App\Http\Controllers\Admin\SetController::class)->only(['index', 'store', 'create']);
@@ -39,15 +39,21 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::resource('aadhaars', App\Http\Controllers\AadhaarController::class)->only(['index', 'store', 'create', 'edit', 'update']);
     });
 
-    Route::group(['middleware' => ['role:admin']], function(){
+    Route::group(['middleware' => ['role:Administrator']], function(){
         Route::resource('rankings', App\Http\Controllers\RankingController::class)->only(['store', 'create', 'edit']);
     });
     Route::get('/rankings', [App\Http\Controllers\RankingController::class, 'index'])->name('rankings.index');
     Route::put('/rankings/{service}', [App\Http\Controllers\RankingController::class, 'update'])->name('rankings.update');
 
-    Route::group(['middleware' => ['role:Byod,Admin']], function(){
+    Route::group(['middleware' => ['role:Byod,Administrator']], function(){
         Route::resource('byods', App\Http\Controllers\ByodController::class)->only(['index', 'store', 'create', 'edit', 'update']);
     });
+
+    Route::group(['middleware' => ['role:RTN,Administrator']], function(){
+        Route::resource('rtn-logs', App\Http\Controllers\Admin\RtnLogController::class)->only(['index','store', 'create', 'edit', 'update']);
+    });
+
+
 });
 
 

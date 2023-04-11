@@ -25,7 +25,7 @@ class SetSeeder extends Seeder
 
         // Loop through sets array and create sets
         foreach ($sets as $set) {
-            \App\Models\Set::create([
+            \App\Models\Set::updateOrCreate([
                 'name' => $set,
             ]);
         }

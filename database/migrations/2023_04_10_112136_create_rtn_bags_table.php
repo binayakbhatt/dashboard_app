@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('rtn_bags', function (Blueprint $table) {
             $table->id();
             $table->foreignId('rtn_log_id')->constrained();
+            $table->foreignId('office_id')->constrained();
             $table->integer('bags_dispatched');
             $table->integer('bags_left');
             $table->text('remarks')->nullable();

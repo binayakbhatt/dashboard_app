@@ -30,7 +30,7 @@ class OfficeTypeSeeder extends Seeder
 
         // Loop through office types and create them
         foreach ($officeTypes as $officeType) {
-            \App\Models\OfficeType::create([
+            \App\Models\OfficeType::updateOrCreate([
                 'name' => $officeType,
             ]);
         }

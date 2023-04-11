@@ -61,6 +61,11 @@
                             {{ __('BYOD') }}
                         </x-nav-link>
                     @endcan
+                    @can('viewAny', \App\Models\RtnLog::class)
+                        <x-nav-link :href="route('rtn-logs.index')" :active="request()->routeIs('rtn-logs.*')">
+                            {{ __('RTN Logs') }}
+                        </x-nav-link>
+                    @endcan
                 </div>
             </div>
 
