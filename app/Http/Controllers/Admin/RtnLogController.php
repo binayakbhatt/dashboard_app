@@ -60,7 +60,8 @@ class RtnLogController extends Controller
      */
     public function edit(RtnLog $rtnLog)
     {
-        //
+        $this->authorize('update', $rtnLog);
+        return view('admin.rtn-logs.edit', compact('rtnLog'));
     }
 
     /**

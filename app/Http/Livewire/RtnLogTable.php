@@ -2,14 +2,16 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Rtn;
+use App\Models\Office;
 use App\Models\RtnLog;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
+use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridEloquent};
 
-final class AdminRtnLogTable extends PowerGridComponent
+final class RtnLogTable extends PowerGridComponent
 {
     use ActionButton;
 
@@ -44,13 +46,18 @@ final class AdminRtnLogTable extends PowerGridComponent
     */
 
     /**
-    * PowerGrid datasource.
-    *
-    * @return Builder<\App\Models\RtnLog>
-    */
+     * PowerGrid datasource.
+     *
+     * @return Builder<\App\Models\RtnLog>
+     */
     public function datasource(): Builder
     {
-        return RtnLog::query();
+        return RtnLog::query()
+            ->join('rtns', 'rtns.id', '=', 'rtn_logs.rtn_id')
+            ->join('offices', 'offices.id', '=', 'rtn_logs.recording_office_id')
+            ->join('users', 'users.id', '=', 'rtn_logs.created_by')
+            ->select('rtn_logs.*', 'rtns.name as rtn_name', 'offices.name as recording_office_name', 'users.name as created_by_name')
+            ->with('bags');
     }
 
     /*
@@ -85,11 +92,19 @@ final class AdminRtnLogTable extends PowerGridComponent
             ->addColumn('id')
             ->addColumn('rtn_id')
             ->addColumn('created_by')
+            ->addColumn('created_by_name')
+            ->addColumn('recording_office_id')
             ->addColumn('arrived_at_formatted', fn (RtnLog $model) => Carbon::parse($model->arrived_at)->format('d/m/Y H:i:s'))
             ->addColumn('departed_at_formatted', fn (RtnLog $model) => Carbon::parse($model->departed_at)->format('d/m/Y H:i:s'))
             ->addColumn('remarks')
             ->addColumn('created_at_formatted', fn (RtnLog $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
-            ->addColumn('updated_at_formatted', fn (RtnLog $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
+            ->addColumn('updated_at_formatted', fn (RtnLog $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'))
+            ->addColumn('rtn_name')
+            ->addColumn('reporting_office_name')
+            ->addColumn('bags_dispatched', fn (RtnLog $model) => $model->bags->sum('bags_dispatched'))
+            ->addColumn('bags_left', fn (RtnLog $model) => $model->bags->sum('bags_left'))
+            ->addColumn('bags_dispatched_detail', fn (RtnLog $model) => $model->bags->map(fn ($bag) => $bag->office->name . ': ' . $bag->bags_dispatched)->implode(', '))
+            ->addColumn('bags_left_detail', fn (RtnLog $model) => $model->bags->map(fn ($bag) => $bag->office->name . ': ' . $bag->bags_left)->implode(', '));
     }
 
     /*
@@ -101,7 +116,7 @@ final class AdminRtnLogTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Columns.
      *
      * @return array<int, Column>
@@ -109,14 +124,17 @@ final class AdminRtnLogTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('ID', 'id')
-                ->makeInputRange(),
+            Column::make('RTN', 'rtn_name')
+                ->sortable()
+                ->searchable()
+                ->makeInputSelect(Rtn::all(), 'name', 'rtn_id'),
 
-            Column::make('RTN ID', 'rtn_id')
-                ->makeInputRange(),
+            Column::make('CREATED BY', 'created_by_name')
+                ->sortable()
+                ->searchable(),
 
-            Column::make('CREATED BY', 'created_by')
-                ->makeInputRange(),
+            Column::make('RECORDING OFFICE', 'recording_office_name')
+                ->makeInputSelect(Office::all(), 'name', 'recording_office_id'),
 
             Column::make('ARRIVED AT', 'arrived_at_formatted', 'arrived_at')
                 ->searchable()
@@ -128,23 +146,29 @@ final class AdminRtnLogTable extends PowerGridComponent
                 ->sortable()
                 ->makeInputDatePicker(),
 
+            Column::make('BAGS DISPATCHED', 'bags_dispatched'),
+
+            Column::make('BAGS LEFT', 'bags_left'),
+
             Column::make('REMARKS', 'remarks')
                 ->sortable()
                 ->searchable()
-                ->makeInputText(),
+                ->hidden()
+                ->visibleInExport(true),
 
             Column::make('CREATED AT', 'created_at_formatted', 'created_at')
                 ->searchable()
                 ->sortable()
                 ->makeInputDatePicker(),
 
-            Column::make('UPDATED AT', 'updated_at_formatted', 'updated_at')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
+            Column::make('BAGS DISPATCHED DETAIL', 'bags_dispatched_detail')
+                ->hidden()
+                ->visibleInExport(true),
 
-        ]
-;
+            Column::make('BAGS LEFT DETAIL', 'bags_left_detail')
+                ->hidden()
+                ->visibleInExport(true),
+        ];
     }
 
     /*
@@ -155,27 +179,28 @@ final class AdminRtnLogTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid RtnLog Action Buttons.
      *
      * @return array<int, Button>
      */
 
-    /*
     public function actions(): array
     {
-       return [
-           Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('rtn-log.edit', ['rtn-log' => 'id']),
+        return [
+            Button::make('edit', 'Edit')
+                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
+                ->route('rtn-logs.edit', ['rtn_log' => 'id'])
+                ->target(''),
 
-           Button::make('destroy', 'Delete')
+            /*
+               Button::make('destroy', 'Delete')
                ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
                ->route('rtn-log.destroy', ['rtn-log' => 'id'])
                ->method('delete')
+               */
         ];
     }
-    */
 
     /*
     |--------------------------------------------------------------------------
@@ -185,22 +210,21 @@ final class AdminRtnLogTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid RtnLog Action Rules.
      *
      * @return array<int, RuleActions>
      */
 
-    /*
+    
     public function actionRules(): array
     {
        return [
 
            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($rtn-log) => $rtn-log->id === 1)
+                ->when(fn (RtnLog $rtnlog) => $rtnlog->created_by !== auth()->id())
                 ->hide(),
         ];
     }
-    */
 }

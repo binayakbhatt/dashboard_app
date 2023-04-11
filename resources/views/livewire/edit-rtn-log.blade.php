@@ -1,0 +1,89 @@
+<div class="py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6 bg-white border-b border-gray-200">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="col-start-1">
+                        <x-label for="rtn_id" :value="__('Select RTN')" />
+                        @error('rtn_id')
+                            <label for="address" class="text-xs text-red-700 block">{{ $message }}</label>
+                        @enderror
+                        <x-input-select id="rtn_id" wire:model="rtn_id"
+                            class="block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                            <option value="" selected>Select</option>
+                            @foreach ($rtns as $rtn)
+                                <option value="{{ $rtn->id }}" selected>{{ $rtn->name }}
+                                </option>
+                            @endforeach
+                        </x-input-select>
+                    </div>
+                    <div class="">
+                        <x-label for="recording_office_id" :value="__('Recording Office')" />
+                        @error('recording_office_id')
+                            <label for="address" class="text-xs text-red-700 block">{{ $message }}</label>
+                        @enderror
+                        <x-input-select id="recording_office_id" wire:model="recording_office_id"
+                            class="block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                            <option value="" selected readonly>Select</option>
+                            @foreach ($userOffices as $userOffice)
+                                <option value="{{ $userOffice->id }}">{{ $userOffice->name }}
+                                </option>
+                            @endforeach
+                        </x-input-select>
+                    </div>
+                    <div class="col-start-1">
+                        <x-label for="arrived_at" :value="__('Arrived at')" />
+                        @error('arrived_at')
+                            <label for="address" class="text-xs text-red-700 block">{{ $message }}</label>
+                        @enderror
+                        <x-input id="arrived_at" class="block mt-1 w-full" type="datetime-local" wire:model="arrived_at"
+                            required value="{{ $arrived_at }}" />
+                    </div>
+                    <div>
+                        <x-label for="departed_at" :value="__('Departed at')" />
+                        @error('departed_at')
+                            <label for="address" class="text-xs text-red-700 block">{{ $message }}</label>
+                        @enderror
+                        <x-input id="departed_at" class="block mt-1 w-full" type="datetime-local"
+                            wire:model="departed_at" required value="{{ $departed_at }}" />
+                    </div>
+
+                    @if ($offices !== null)
+                        @foreach ($offices as $office)
+                            <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                <div class="md:col-span-2 font-bold">
+                                    {{ $office->name }}
+                                </div>
+                                <div>
+                                    <x-label for="bags_dispatched" :value="__('Bags dispatched')" />
+                                    <x-input id="bags_dispatched" class="block mt-1 w-full" type="number"
+                                        wire:model="bags_dispatched.{{ $office->id }}" required />
+                                </div>
+                                <div>
+                                    <x-label for="bags_left" :value="__('Bags left')" />
+                                    <x-input id="bags_left" class="block mt-1 w-full" type="number"
+                                        wire:model="bags_left.{{ $office->id }}" required />
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+
+                    <div class="col-start-1 md:col-span-2 mt-4">
+                        <x-label for="remarks" :value="__('Remarks (reason for bags left)')" />
+                        @error('remarks')
+                            <label for="address" class="text-xs text-red-700 block">{{ $message }}</label>
+                        @enderror
+                        <x-textarea id="remarks" class="block mt-1 w-full" type="text" wire:model="remarks"
+                            required value="{{ $remarks }}"></x-textarea>
+                    </div>
+
+                    <div class="col-start-1 md:col-span-2 mt-4">
+                        <x-button wire:click="submit" class="ml-4">
+                            {{ __('Save') }}
+                        </x-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
