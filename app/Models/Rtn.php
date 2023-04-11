@@ -10,7 +10,7 @@ class Rtn extends Model
         'name'
     ];
 
-    public function defaultRtns()
+    public static function defaultRtns()
     {
         return [
             'Itanagar Line',
@@ -24,5 +24,10 @@ class Rtn extends Model
     public function logs()
     {
         return $this->hasMany(RtnLog::class);
+    }
+
+    public function offices()
+    {
+        return $this->belongsToMany(Office::class);
     }
 }   

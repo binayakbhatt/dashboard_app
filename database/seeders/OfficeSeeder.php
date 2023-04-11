@@ -170,7 +170,10 @@ class OfficeSeeder extends Seeder
 
         // Create offices in database
         foreach ($offices as $office) {
-            \App\Models\Office::create($office);
+            \App\Models\Office::updateOrCreate(
+                ['facility_id' => $office['facility_id']],
+                $office
+            );
         }
     }
 }

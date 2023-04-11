@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Office;
 use App\Models\Rtn;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,9 @@ class RtnController extends Controller
      */
     public function create()
     {
-        //
+        $offices  = Office::all();
+
+        return view('admin.rtns.create', compact('offices'));
     }
 
     /**
@@ -36,7 +39,18 @@ class RtnController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|unique:rtns,name',
+            'office_ids' => 'required|exists:offices,id'
+        ]);
+
+        $rtn = Rtn::create([
+            'name' => $validated['name']
+        ]);
+
+        $rtn->offices()->attach($validated['office_ids']);
+
+        return redirect()->route('admin.rtns.index')->with('success', 'Rtn created successfully');
     }
 
     /**
@@ -58,7 +72,9 @@ class RtnController extends Controller
      */
     public function edit(Rtn $rtn)
     {
-        //
+        $offices  = Office::all();
+
+        return view('admin.rtns.edit', compact('rtn', 'offices'));
     }
 
     /**
@@ -70,7 +86,18 @@ class RtnController extends Controller
      */
     public function update(Request $request, Rtn $rtn)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|unique:rtns,name,' . $rtn->id,
+            'office_ids' => 'required|exists:offices,id'
+        ]);
+
+        $rtn->update([
+            'name' => $validated['name']
+        ]);
+
+        $rtn->offices()->sync($validated['office_ids']);
+
+        return redirect()->route('admin.rtns.index')->with('success', 'Rtn updated successfully');
     }
 
     /**

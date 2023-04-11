@@ -31,4 +31,9 @@ class Office extends Model
     public function division(){
         return $this->belongsTo(Division::class);
     }
+
+    public function rtns()
+    {
+        return $this->belongsToMany(Rtn::class);
+    }
 }

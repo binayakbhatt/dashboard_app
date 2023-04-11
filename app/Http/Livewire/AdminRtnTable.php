@@ -105,23 +105,23 @@ final class AdminRtnTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('ID', 'id')
-                ->makeInputRange(),
+            // Column::make('ID', 'id')
+            //     ->makeInputRange(),
 
             Column::make('NAME', 'name')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
 
-            Column::make('CREATED AT', 'created_at_formatted', 'created_at')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
+            // Column::make('CREATED AT', 'created_at_formatted', 'created_at')
+            //     ->searchable()
+            //     ->sortable()
+            //     ->makeInputDatePicker(),
 
-            Column::make('UPDATED AT', 'updated_at_formatted', 'updated_at')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
+            // Column::make('UPDATED AT', 'updated_at_formatted', 'updated_at')
+            //     ->searchable()
+            //     ->sortable()
+            //     ->makeInputDatePicker(),
 
         ]
 ;
@@ -141,21 +141,22 @@ final class AdminRtnTable extends PowerGridComponent
      * @return array<int, Button>
      */
 
-    /*
     public function actions(): array
     {
-       return [
-           Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('rtn.edit', ['rtn' => 'id']),
-
+        return [
+            Button::make('edit', 'Edit')
+            ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+            ->route('admin.rtns.edit', ['rtn' => 'id'])
+            ->target(''),
+            
+            /*
            Button::make('destroy', 'Delete')
                ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
                ->route('rtn.destroy', ['rtn' => 'id'])
                ->method('delete')
+               */
         ];
     }
-    */
 
     /*
     |--------------------------------------------------------------------------
