@@ -32,20 +32,32 @@
                         </x-input-select>
                     </div>
                     <div class="col-start-1">
-                        <x-label for="arrived_at" :value="__('Arrived at')" />
+                        <x-label for="arrived_at" :value="__('Arrived at (YYYY-MM-DD HH:MM)')" />
                         @error('arrived_at')
                             <label for="address" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-input id="arrived_at" class="block mt-1 w-full" type="datetime-local" wire:model="arrived_at"
-                            required value="{{ $arrived_at }}" />
+                        <div x-data x-init="flatpickr($refs.datetimewidget, { wrap: true, enableTime: true, time_24hr: true, dateFormat: 'Y-m-d H:i' });" x-ref="datetimewidget"
+                            class="flatpickr container mx-auto col-span-6 sm:col-span-6 mt-1">
+                            <div class="flex align-middle align-content-center">
+                                <input x-ref="datetime" type="text" id="datetime" data-input placeholder="Select.."
+                                    wire:model="arrived_at" required value="{{ $arrived_at }}"
+                                    class="block w-full px-2 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-l-md shadow-sm">
+                            </div>
+                        </div>
                     </div>
                     <div>
-                        <x-label for="departed_at" :value="__('Departed at')" />
+                        <x-label for="departed_at" :value="__('Departed at (YYYY-MM-DD HH:MM)')" />
                         @error('departed_at')
                             <label for="address" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-input id="departed_at" class="block mt-1 w-full" type="datetime-local"
-                            wire:model="departed_at" required value="{{ $departed_at }}" />
+                        <div x-data x-init="flatpickr($refs.datetimewidget, { wrap: true, enableTime: true, time_24hr: true, dateFormat: 'Y-m-d H:i' });" x-ref="datetimewidget"
+                            class="flatpickr container mx-auto col-span-6 sm:col-span-6 mt-1">
+                            <div class="flex align-middle align-content-center">
+                                <input x-ref="datetime" type="text" id="datetime" data-input placeholder="Select.."
+                                    wire:model="departed_at" required value="{{ $departed_at }}"
+                                    class="block w-full px-2 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-l-md shadow-sm">
+                            </div>
+                        </div>
                     </div>
 
                     @if ($offices !== null)

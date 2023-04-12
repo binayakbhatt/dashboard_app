@@ -4,6 +4,8 @@ import Alpine from 'alpinejs';
 
 import 'flowbite';
 
+import flatpickr from "flatpickr";
+
 
 
 window.Alpine = Alpine;

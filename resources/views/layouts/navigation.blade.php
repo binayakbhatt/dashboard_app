@@ -152,6 +152,11 @@
                     {{ __('Aadhaar Data') }}
                 </x-responsive-nav-link>
             @endcan
+            @can('viewAny', \App\Models\RtnLog::class)
+                <x-responsive-nav-link :href="route('rtn-logs.index')" :active="request()->routeIs('rtn-logs.*')">
+                    {{ __('RTN Logs') }}
+                </x-responsive-nav-link>
+            @endcan
         </div>
 
         <!-- Responsive Settings Options -->
