@@ -20,6 +20,7 @@ class EditRtnLog extends Component
     public $remarks;
 
     public $office_ids = [];
+    public $bags_received = [];
     public $bags_dispatched = [];
     public $bags_left = [];
 
@@ -37,9 +38,11 @@ class EditRtnLog extends Component
 
         $this->offices = $rtnLog->rtn->offices;
         $this->office_ids = $rtnLog->bags()->orderBy('office_id')->pluck('office_id')->toArray();
+        $this->bags_received = $rtnLog->bags()->orderBy('office_id')->pluck('bags_received')->toArray();
         $this->bags_dispatched = $rtnLog->bags()->orderBy('office_id')->pluck('bags_dispatched')->toArray();
         $this->bags_left = $rtnLog->bags()->orderBy('office_id')->pluck('bags_left')->toArray();
 
+        $this->bags_received = array_combine($this->office_ids, $this->bags_received);
         $this->bags_dispatched = array_combine($this->office_ids, $this->bags_dispatched);
         $this->bags_left = array_combine($this->office_ids, $this->bags_left);
     }
@@ -50,12 +53,14 @@ class EditRtnLog extends Component
             $this->offices = Rtn::find($value)->offices;
             // Set $office_ids, $bags_dispatched, $bags_left as $id => 0
             $this->office_ids = $this->offices->pluck('id')->toArray();
+            $this->bags_received = array_fill_keys($this->office_ids, 0);
             $this->bags_dispatched = array_fill_keys($this->office_ids, 0);
             $this->bags_left = array_fill_keys($this->office_ids, 0);
         }else{
             $this->offices = null;
             // Set $office_ids, $bags_dispatched, $bags_left as empty array
             $this->office_ids = [];
+            $this->bags_received = [];
             $this->bags_dispatched = [];
             $this->bags_left = [];
         }
@@ -71,6 +76,8 @@ class EditRtnLog extends Component
             'remarks' => 'nullable|string',
             'office_ids' => 'required|array',
             'office_ids.*' => 'required|exists:offices,id',
+            'bags_received' => 'required|array',
+            'bags_received.*' => 'required|integer|min:0',
             'bags_dispatched' => 'required|array',
             'bags_dispatched.*' => 'required|integer|min:0',
             'bags_left' => 'required|array',
@@ -95,6 +102,7 @@ class EditRtnLog extends Component
         foreach ($this->office_ids as $key => $office_id) {
             $this->rtnLog->bags()->create([
                 'office_id' => $office_id,
+                'bags_received' => $this->bags_received[$office_id],
                 'bags_dispatched' => $this->bags_dispatched[$office_id],
                 'bags_left' => $this->bags_left[$office_id],
             ]);
