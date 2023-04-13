@@ -101,8 +101,10 @@ final class RtnLogTable extends PowerGridComponent
             ->addColumn('updated_at_formatted', fn (RtnLog $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'))
             ->addColumn('rtn_name')
             ->addColumn('reporting_office_name')
+            ->addColumn('bags_received', fn (RtnLog $model) => $model->bags->sum('bags_received'))
             ->addColumn('bags_dispatched', fn (RtnLog $model) => $model->bags->sum('bags_dispatched'))
             ->addColumn('bags_left', fn (RtnLog $model) => $model->bags->sum('bags_left'))
+            ->addColumn('bags_received_detail', fn (RtnLog $model) => $model->bags->map(fn ($bag) => $bag->office->name . ': ' . $bag->bags_received)->implode(', '))
             ->addColumn('bags_dispatched_detail', fn (RtnLog $model) => $model->bags->map(fn ($bag) => $bag->office->name . ': ' . $bag->bags_dispatched)->implode(', '))
             ->addColumn('bags_left_detail', fn (RtnLog $model) => $model->bags->map(fn ($bag) => $bag->office->name . ': ' . $bag->bags_left)->implode(', '));
     }
@@ -146,6 +148,8 @@ final class RtnLogTable extends PowerGridComponent
                 ->sortable()
                 ->makeInputDatePicker(),
 
+            Column::make('BAGS RECEIVED', 'bags_received'),
+
             Column::make('BAGS DISPATCHED', 'bags_dispatched'),
 
             Column::make('BAGS LEFT', 'bags_left'),
@@ -160,6 +164,14 @@ final class RtnLogTable extends PowerGridComponent
                 ->searchable()
                 ->sortable()
                 ->makeInputDatePicker(),
+
+            Column::make('UPDATED AT', 'updated_at_formatted', 'updated_at')
+                ->hidden()
+                ->visibleInExport(true),
+
+            Column::make('BAGS RECEIVED DETAIL', 'bags_received_detail')
+                ->hidden()
+                ->visibleInExport(true),
 
             Column::make('BAGS DISPATCHED DETAIL', 'bags_dispatched_detail')
                 ->hidden()

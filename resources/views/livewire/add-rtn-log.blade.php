@@ -62,9 +62,18 @@
 
                     @if ($offices !== null)
                         @foreach ($offices as $office)
-                            <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                                <div class="md:col-span-2 font-bold">
+                            <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                                <div class="md:col-span-3 font-bold">
                                     {{ $office->name }}
+                                </div>
+                                <div>
+                                    <x-label for="bags_received" :value="__('Bags received')" />
+                                    @error('bags_received.' . $office->id)
+                                        <label for="address"
+                                            class="text-xs text-red-700 block">{{ $message }}</label>
+                                    @enderror
+                                    <x-input id="bags_received" class="block mt-1 w-full" type="number"
+                                        wire:model="bags_received.{{ $office->id }}" required />
                                 </div>
                                 <div>
                                     <x-label for="bags_dispatched" :value="__('Bags dispatched')" />

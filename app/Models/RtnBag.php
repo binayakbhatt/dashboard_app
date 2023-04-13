@@ -11,6 +11,7 @@ class RtnBag extends Model
     protected $fillable = [
         'rtn_log_id',
         'office_id',
+        'bags_received',
         'bags_dispatched',
         'bags_left',
     ];

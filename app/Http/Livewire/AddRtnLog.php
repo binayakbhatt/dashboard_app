@@ -19,6 +19,7 @@ class AddRtnLog extends Component
     public $remarks;
 
     public $office_ids = [];
+    public $bags_received = [];
     public $bags_dispatched = [];
     public $bags_left = [];
 
@@ -34,12 +35,14 @@ class AddRtnLog extends Component
             $this->offices = Rtn::find($value)->offices;
             // Set $office_ids, $bags_dispatched, $bags_left as $id => 0
             $this->office_ids = $this->offices->pluck('id')->toArray();
+            $this->bags_received = array_fill_keys($this->office_ids, 0);
             $this->bags_dispatched = array_fill_keys($this->office_ids, 0);
             $this->bags_left = array_fill_keys($this->office_ids, 0);
         }else{
             $this->offices = null;
             // Set $office_ids, $bags_dispatched, $bags_left as empty array
             $this->office_ids = [];
+            $this->bags_received = [];
             $this->bags_dispatched = [];
             $this->bags_left = [];
         }
@@ -55,6 +58,8 @@ class AddRtnLog extends Component
             'remarks' => 'nullable|string',
             'office_ids' => 'required|array',
             'office_ids.*' => 'required|exists:offices,id',
+            'bags_received' => 'required|array',
+            'bags_received.*' => 'required|integer|min:0',
             'bags_dispatched' => 'required|array',
             'bags_dispatched.*' => 'required|integer|min:0',
             'bags_left' => 'required|array',
@@ -78,6 +83,7 @@ class AddRtnLog extends Component
         foreach ($this->office_ids as $key => $office_id) {
             $rtnLog->bags()->create([
                 'office_id' => $office_id,
+                'bags_received' => $this->bags_received[$office_id],
                 'bags_dispatched' => $this->bags_dispatched[$office_id],
                 'bags_left' => $this->bags_left[$office_id],
             ]);
