@@ -16,6 +16,8 @@ final class MoTable extends PowerGridComponent
 {
     use ActionButton;
 
+    public string $primaryKey = 'mos.id';
+
     /*
     |--------------------------------------------------------------------------
     |  Features Setup
