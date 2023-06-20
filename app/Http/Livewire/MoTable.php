@@ -16,13 +16,6 @@ final class MoTable extends PowerGridComponent
 {
     use ActionButton;
 
-    public int $queues = 5; // Use two queues
-
-    // public string $onQueue = 'my-dishes'; //queue name
-
-    // public string $onConnection = 'redis'; // default sync
-
-    public bool $showExporting = true; //Show progress on screen
     /*
     |--------------------------------------------------------------------------
     |  Features Setup
@@ -40,7 +33,7 @@ final class MoTable extends PowerGridComponent
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
             Header::make()->showSearchInput(),
             Footer::make()
-                ->showPerPage()
+                ->showPerPage(50)
                 ->showRecordCount(),
         ];
     }
