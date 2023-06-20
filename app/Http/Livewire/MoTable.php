@@ -16,6 +16,13 @@ final class MoTable extends PowerGridComponent
 {
     use ActionButton;
 
+    public int $queues = 5; // Use two queues
+
+    // public string $onQueue = 'my-dishes'; //queue name
+
+    // public string $onConnection = 'redis'; // default sync
+
+    public bool $showExporting = true; //Show progress on screen
     /*
     |--------------------------------------------------------------------------
     |  Features Setup
@@ -262,8 +269,8 @@ final class MoTable extends PowerGridComponent
 
     public function actionRules(): array
     {
-       return [
-           //Check if user is owner of the Mo
+        return [
+            //Check if user is owner of the Mo
             Rule::button('edit')
                 ->when(fn (Mo $mo) => $mo->user_id !== auth()->id())
                 ->hide(),
